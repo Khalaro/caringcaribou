@@ -2,6 +2,7 @@
 import re
 #import pandas as pd
 import os
+import subprocess
 
 
 
@@ -26,6 +27,9 @@ def main():
 #        file_contents = file.read()
         #print(file_contents)
         #return file_contents
+    #subprocess.call("python cc.py uds services 0x720 0x728")
+    os.system("python cc.py uds services 0x720 0x728 > services_out.txt")
+    #subprocess.call('ls', '-l')
     with open('services_out.txt') as file:
         services_file_contents = file.read()
 #    clients = my_dict['CLIENT'].findall(file_contents)
