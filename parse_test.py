@@ -171,5 +171,5 @@ def main():
 #        print(x)
 
     
-#main()
-pidtest()
+main()
+#pidtest()
