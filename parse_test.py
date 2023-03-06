@@ -45,7 +45,7 @@ def main():
         CS_pair.client_address = clients[index]
         CS_pair.server_address = servers[index]
         if CS_pair not in myarray:
-            myarray.append()
+            myarray.append(CS_pair)
             myarray[index].client_address = clients[index]
             myarray[index].server_address = servers[index]
             print(myarray[index].client_address+'      '+myarray[index].server_address)
