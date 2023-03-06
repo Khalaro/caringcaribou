@@ -44,8 +44,7 @@ def main():
         myarray.append(server_client_pair())
         myarray[index].server_address = servers[index]
         myarray[index].client_address = clients[index]
-        print(myarray[0].client_address+'      '+myarray[0].server_address)
-        print()
+        print(myarray[index].client_address+'      '+myarray[index].server_address)
         
 #    with open('discoveryoutput.txt') as file:
 #        file_contents = file.read()
