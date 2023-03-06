@@ -12,6 +12,15 @@ my_dict = {
     'SERVER': re.compile(r'\b0x[0-9A-Fa-f]+\b \| 0x(?P<SERVER>[0-9A-Fa-f]+)\b \|'),
 }
 
+class service_code_name_pair:
+    def __eq__(self, other):
+        if ((self.service_code == other.service_code) and (self.service_name == other.service_name)):
+            return True
+        else:
+            return False
+    service_code = None
+    service_name = None
+    
 class client_server_pair:
     def __eq__(self, other):
         if ((self.server_address == other.server_address) and (self.client_address == other.client_address)):
@@ -20,6 +29,7 @@ class client_server_pair:
             return False
     server_address = None
     client_address = None
+    services_list = []
 
 def main():
 
@@ -50,15 +60,21 @@ def main():
         CS_pair.server_address = servers[index]
         if CS_pair not in myarray:
             myarray.append(CS_pair)
+    print('discovery_output: \n clients     servers \n')
     for CS_pair in myarray:        
-        print('discovery_output: \n clients     servers \n')
         print(CS_pair.client_address+'      '+CS_pair.server_address)
         
+        
+    
+    for CS_pair in myarray:        
+        #subprocess.call("python cc.py uds services 0x%s 0x%s > services_out.txt"%(CS_pair.client_address, CS_pair.server_address) )
+        print("python cc.py uds services 0x%s 0x%s > services_out.txt"%(CS_pair.client_address, CS_pair.server_address) )
 #    with open('discoveryoutput.txt') as file:
 #        file_contents = file.read()
         #print(file_contents)
         #return file_contents
         
+    #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
     #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
     #subprocess.call('ls', '-l')
     with open('services_out.txt') as file:
