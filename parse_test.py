@@ -31,19 +31,14 @@ def main():
         #return file_contents
     #subprocess.call("python cc.py uds services 0x720 0x728")
     # cmd.run 'python cc.py uds discovery -min 0x000 -max 0xfff'
+    #os.system("python cc.py uds discovery -min 0x600 -max 0x7ff >  discovery_output.txt")
     #os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
-    os.system("python cc.py uds discovery -min 0x600 -max 0x7ff >  discovery_output.txt")
     #subprocess.call('ls', '-l')
     with open('discovery_output.txt') as file:
         discovery_file_contents = file.read()
     clients = my_dict['CLIENT'].findall(discovery_file_contents)
     servers = my_dict['SERVER'].findall(discovery_file_contents)
-    print('discovery_output clients \n')
-    for x in clients:
-        print(x)
-    print('discovery_output servers \n')
-    for x in servers:
-        print(x)
+    print('discovery_output: \n clients     servers \n')
     myarray = []
     for index,value in enumerate(clients):    
         myarray.append(server_client_pair())
@@ -57,8 +52,7 @@ def main():
         #print(file_contents)
         #return file_contents
         
-    #subprocess.call("python cc.py uds services 0x720 0x728")
-    os.system("python cc.py uds discovery -min 0x600 -max 0x7ff > discovery_out.txt")
+    #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
     #subprocess.call('ls', '-l')
     with open('services_out.txt') as file:
         services_file_contents = file.read()
@@ -79,7 +73,7 @@ def main():
     for x in service_codes:
         print(x)
         
-    os.system("python cc.py uds services 0x7e0 0x7e8 > services_out.txt")
+    #os.system("python cc.py uds services 0x7e0 0x7e8 > services_out.txt")
     #subprocess.call('ls', '-l')
     with open('services_out.txt') as file:
         services_file_contents = file.read()
