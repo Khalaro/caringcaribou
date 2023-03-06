@@ -31,7 +31,7 @@ def main():
         #return file_contents
     #subprocess.call("python cc.py uds services 0x720 0x728")
     # cmd.run 'python cc.py uds discovery -min 0x000 -max 0xfff'
-    os.system("python cc.py uds discovery -min 0x000 -max 0xfff' >  discovery_output.txt")
+    os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
     #subprocess.call('ls', '-l')
     with open('discovery_output.txt') as file:
         discovery_file_contents = file.read()
