@@ -66,13 +66,23 @@ def main():
         
         
     
-    for CS_pair in myarray:        
+    for CS_pair in myarray:      
         print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-#    with open('discoveryoutput.txt') as file:
-#        file_contents = file.read()
-        #print(file_contents)
-        #return file_contents
+        with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
+            services_file_contents = file.read()
+        service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
+        service_names = my_dict['SERVICE_NAME'].findall(services_file_contents)
+        
+        for index,value in enumerate(service_codes):
+            service_code_name_row = service_code_name_pair()
+            service_code_name_row.service_code = service_codes[index]
+            service_code_name_row.service_name = service_names[index]
+            if service_code_name_row not in CS_pair.services_list:
+                CS_pair.services_list.append(service_code_name_row)
+        
+            #print(file_contents)
+            #return file_contents
         
     #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
     #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
@@ -81,8 +91,6 @@ def main():
         services_file_contents = file.read()
 #    clients = my_dict['CLIENT'].findall(file_contents)
 #    servers = my_dict['SERVER'].findall(file_contents)
-    service_names = my_dict['SERVICE_NAME'].findall(services_file_contents)
-    service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
 #    print('clients \n')
 #    for x in clients:
 #        print(x)
