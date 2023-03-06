@@ -43,6 +43,48 @@ class client_server_pair:
     services_list = []
     pid_list =[]
 
+    
+    
+def pidtest():
+    for CS_pair in myarray:      
+        print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+        os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+        with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
+            services_file_contents = file.read()
+        service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
+        service_names = my_dict['SERVICE_NAME'].findall(services_file_contents)
+        
+        for index,value in enumerate(service_codes):
+            service_code_name_row = service_code_name_pair()
+            service_code_name_row.service_code = service_codes[index]
+            service_code_name_row.service_name = service_names[index]
+            if service_code_name_row not in CS_pair.services_list:
+                CS_pair.services_list.append(service_code_name_row)
+        #if server address is 8 greater than client address, then we will scan the pair for pids
+        if(  (int(CS_pair.client_address, base=16)+8) == int(CS_pair.client_address, base=16)  ):
+            #python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190  0x720 0x728        
+            #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+            print("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+            os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+            with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
+                pid_file_contents = file.read()        
+            pid_codes = my_dict['PID'].findall(pid_file_contents)
+            pid_data_values = my_dict['VALUE'].findall(pid_file_contents)
+
+            for index,pid in enumerate(pid_codes):
+                pid_row = pid_value_pair()
+                pid_row.pid_code=pid_codes[index]
+                pid_row.data_value=pid_data_values[index]
+                CS_pair.pid_list.append(pid_row)
+    
+    for CS_pair in myarray:
+        print('server_address   |   client_address \n')
+        print(CS_pair.server_address + '  |   '+  CS_pair.client_address+'\n')
+        print('PIDS   |   VALUES \n')
+        for pid in CS_pair.pid_list:
+            print(pid.pid_code + ' : ' + pid.data_value + '\n')
+    
+    
 def main():
 
     my_dict = {
@@ -130,4 +172,5 @@ def main():
 #        print(x)
 
     
-main()
+#main()
+pidtest()
