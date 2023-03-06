@@ -43,7 +43,6 @@ def main():
         discovery_file_contents = file.read()
     clients = my_dict['CLIENT'].findall(discovery_file_contents)
     servers = my_dict['SERVER'].findall(discovery_file_contents)
-    print('discovery_output: \n clients     servers \n')
     myarray = []
     for index,value in enumerate(clients):    
         CS_pair = client_server_pair()
@@ -51,9 +50,9 @@ def main():
         CS_pair.server_address = servers[index]
         if CS_pair not in myarray:
             myarray.append(CS_pair)
-            myarray[index].client_address = clients[index]
-            myarray[index].server_address = servers[index]
-            print(myarray[index].client_address+'      '+myarray[index].server_address)
+    for CS_pair in myarray:        
+    print('discovery_output: \n clients     servers \n')
+    print(CS_pair.client_address+'      '+CS_pair.server_address)
         
 #    with open('discoveryoutput.txt') as file:
 #        file_contents = file.read()
