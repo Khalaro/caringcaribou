@@ -43,7 +43,13 @@ def main():
     print('discovery_output servers \n')
     for x in servers:
         print(x)
-        
+    myarray = []
+    for index,value in enumerate(clients):    
+        myarray.append(server_client_pair())
+        myarray[index].server_address = servers[index]
+        myarray[index].client_address = clients[index]
+        print(myarray[0].client_address+'      '+myarray[0].server_address)
+        print()
         
 #    with open('discoveryoutput.txt') as file:
 #        file_contents = file.read()
