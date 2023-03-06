@@ -50,6 +50,10 @@ class client_server_pair:
     
     
 def pidtest():  
+    myarray=[]
+    myarray.append(client_server_pair())
+    myarray[0].client_address = '00000720'
+    myarray[0].server_address = '00000728'
     services_list =[]
     print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%('00000720', '00000728', '00000720', '00000728') )
     os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%('00000720', '00000728', '00000720', '00000728') )
@@ -62,7 +66,7 @@ def pidtest():
         service_code_name_row = service_code_name_pair()
         service_code_name_row.service_code = service_codes[index]
         service_code_name_row.service_name = service_names[index]
-        if service_code_name_row not in CS_pair.services_list:
+        if service_code_name_row not in services_list:
             services_list.append(service_code_name_row)
     #if server address is 8 greater than client address, then we will scan the pair for pids
     if(  (int('00000720', base=16)+8) == int('00000728', base=16)  ):
@@ -70,7 +74,7 @@ def pidtest():
         #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         print("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         #os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-        with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
+        with open("pids_out_%s_%s.txt"%('00000720', '00000728' ) )as file:
             pid_file_contents = file.read()        
         pid_codes = my_dict['PID'].findall(pid_file_contents)
         pid_data_values = my_dict['VALUE'].findall(pid_file_contents)
