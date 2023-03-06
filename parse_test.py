@@ -51,8 +51,8 @@ def main():
         if CS_pair not in myarray:
             myarray.append(CS_pair)
     for CS_pair in myarray:        
-    print('discovery_output: \n clients     servers \n')
-    print(CS_pair.client_address+'      '+CS_pair.server_address)
+        print('discovery_output: \n clients     servers \n')
+        print(CS_pair.client_address+'      '+CS_pair.server_address)
         
 #    with open('discoveryoutput.txt') as file:
 #        file_contents = file.read()
