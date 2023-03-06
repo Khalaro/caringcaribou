@@ -54,7 +54,8 @@ def pidtest():
     myarray.append(client_server_pair())
     myarray[0].client_address = '00000720'
     myarray[0].server_address = '00000728'
-    services_list =[]
+    #pid_list=[]
+    #services_list =[]
     print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%('00000720', '00000728', '00000720', '00000728') )
     os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%('00000720', '00000728', '00000720', '00000728') )
     with open("services_out_%s_%s.txt"%('00000720', '00000728' ) )as file:
@@ -67,12 +68,12 @@ def pidtest():
         service_code_name_row.service_code = service_codes[index]
         service_code_name_row.service_name = service_names[index]
         if service_code_name_row not in services_list:
-            services_list.append(service_code_name_row)
+            myarray[0].services_list.append(service_code_name_row)
     #if server address is 8 greater than client address, then we will scan the pair for pids
     if(  (int('00000720', base=16)+8) == int('00000728', base=16)  ):
         #python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190  0x720 0x728        
         #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-        print("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+        print("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%('00000720', '00000728', '00000720', '00000728') )
         #os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         with open("pids_out_%s_%s.txt"%('00000720', '00000728' ) )as file:
             pid_file_contents = file.read()        
@@ -83,7 +84,7 @@ def pidtest():
             pid_row = pid_value_pair()
             pid_row.pid_code=pid_codes[index]
             pid_row.data_value=pid_data_values[index]
-            CS_pair.pid_list.append(pid_row)
+            myarray[0].pid_list.append(pid_row)
 
     for CS_pair in myarray:
         print('server_address   |   client_address \n')
