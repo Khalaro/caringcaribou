@@ -15,9 +15,9 @@ my_dict = {
 class client_server_pair:
     def __eq__(self, other):
         if ((self.server_address == other.server_address) and (self.client_address == other.client_address)):
-            return true
+            return True
         else:
-            return false
+            return False
     server_address = None
     client_address = None
 
