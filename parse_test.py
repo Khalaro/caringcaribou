@@ -12,6 +12,17 @@ my_dict = {
     'SERVER': re.compile(r'\b0x[0-9A-Fa-f]+\b \| 0x(?P<SERVER>[0-9A-Fa-f]+)\b \|'),
 }
 
+
+class pid_value_pair:
+    def __eq__(self, other):
+        if ((self.pid_code == other.pid_code) and (self.data_value == other.data_value)):
+            return True
+        else:
+            return False
+    pid_code = None
+    data_value = None
+
+
 class service_code_name_pair:
     def __eq__(self, other):
         if ((self.service_code == other.service_code) and (self.service_name == other.service_name)):
@@ -30,6 +41,7 @@ class client_server_pair:
     server_address = None
     client_address = None
     services_list = []
+    pid_list =[]
 
 def main():
 
@@ -38,6 +50,8 @@ def main():
         'SERVER': re.compile(r'\b0x[0-9A-Fa-f]+\b \| 0x(?P<SERVER>[0-9A-Fa-f]+)\b \|'),
         'SERVICE_NAME': re.compile(r'Supported service 0x[0-9A-Fa-f]+: (?P<SERVICE_NAME>[^\\\n]+) ?'),
         'SERVICE_CODE': re.compile(r'Supported service (?P<SERVICE_CODE>0x[0-9A-Fa-f]+): [^\\\n]+ ?'),
+        'PID': re.compile(r'  0x(?P<PID>[0-9A-Fa-f]+) [0-9A-Fa-f]+?'),
+        'VALUE': re.compile(r'  0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'),  #    (0x[0-9A-Fa-f]+) ([0-9A-Fa-f]+)?
         'KEY': re.compile(r'.'),
     }
 #    with open('discoveryoutput.txt') as file:
@@ -80,18 +94,30 @@ def main():
             service_code_name_row.service_name = service_names[index]
             if service_code_name_row not in CS_pair.services_list:
                 CS_pair.services_list.append(service_code_name_row)
+        #python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190  0x720 0x728        
+        #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+        os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+        with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
+            pid_file_contents = file.read()        
+        pid_codes = my_dict['PID'].findall(pid_file_contents)
+        pid_data_values = my_dict['VALUE'].findall(pid_file_contents)
         
-            #print(file_contents)
-            #return file_contents
-        
+        for index,pid in enumerate(pid_codes):
+            pid_row = pid_value_pair()
+            pid_row.pid_code=pid_codes[index]
+            pid_row.data_value=pid_data_values[index]
+            CS_pair.pid_list.append(service_code_name_row)
     
-    #for CS_pair in myarray:
+    for CS_pair in myarray:
+        print('server_address   |   client_address \n')
+        print(CS_pair.server_address + '  |   '+  CS_pair.client_address+'\n')
+        print('PIDS   |   VALUES \n')
+        for pid in CSpair.pid_list:
+            print(pid.pid_code + ' : ' + pid.data_value + '\n')
         
     #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
     #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
     #subprocess.call('ls', '-l')
-    with open('services_out.txt') as file:
-        services_file_contents = file.read()
 #    clients = my_dict['CLIENT'].findall(file_contents)
 #    servers = my_dict['SERVER'].findall(file_contents)
 #    print('clients \n')
