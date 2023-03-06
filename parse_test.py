@@ -149,6 +149,7 @@ def main():
                 pid_row = pid_value_pair()
                 pid_row.pid_code=pid_codes[index]
                 pid_row.data_value=pid_data_values[index]
+                print( 'PIDS: '+pid_codes[index] + '        '+   pid_data_values[index]    )
                 CS_pair.pid_list.append(pid_row)
     
     for CS_pair in myarray:
