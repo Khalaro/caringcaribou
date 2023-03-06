@@ -67,8 +67,8 @@ def main():
         
     
     for CS_pair in myarray:        
-        #subprocess.call("python cc.py uds services 0x%s 0x%s > services_out.txt"%(CS_pair.client_address, CS_pair.server_address) )
-        print("python cc.py uds services 0x%s 0x%s > services_out.txt"%(CS_pair.client_address, CS_pair.server_address) )
+        print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+        subprocess.call("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
 #    with open('discoveryoutput.txt') as file:
 #        file_contents = file.read()
         #print(file_contents)
