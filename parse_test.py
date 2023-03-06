@@ -50,8 +50,8 @@ def main():
         'SERVER': re.compile(r'\b0x[0-9A-Fa-f]+\b \| 0x(?P<SERVER>[0-9A-Fa-f]+)\b \|'),
         'SERVICE_NAME': re.compile(r'Supported service 0x[0-9A-Fa-f]+: (?P<SERVICE_NAME>[^\\\n]+) ?'),
         'SERVICE_CODE': re.compile(r'Supported service (?P<SERVICE_CODE>0x[0-9A-Fa-f]+): [^\\\n]+ ?'),
-        'PID': re.compile(r'  0x(?P<PID>[0-9A-Fa-f]+) [0-9A-Fa-f]+?'),
-        'VALUE': re.compile(r'  0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'),  #    (0x[0-9A-Fa-f]+) ([0-9A-Fa-f]+)?
+        'PID': re.compile(r'0x(?P<PID>[0-9A-Fa-f]+) [0-9A-Fa-f]+?'),
+        'VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'),  #    (0x[0-9A-Fa-f]+) ([0-9A-Fa-f]+)?
         'KEY': re.compile(r'.'),
     }
 #    with open('discoveryoutput.txt') as file:
