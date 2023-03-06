@@ -12,7 +12,7 @@ my_dict = {
     'SERVER': re.compile(r'\b0x[0-9A-Fa-f]+\b \| 0x(?P<SERVER>[0-9A-Fa-f]+)\b \|'),
 }
 
-class server_client_pair:
+class client_server_pair:
     server_address = None
     client_address = None
 
@@ -41,10 +41,14 @@ def main():
     print('discovery_output: \n clients     servers \n')
     myarray = []
     for index,value in enumerate(clients):    
-        myarray.append(server_client_pair())
-        myarray[index].server_address = servers[index]
-        myarray[index].client_address = clients[index]
-        print(myarray[index].client_address+'      '+myarray[index].server_address)
+        CS_pair = client_server_pair()
+        CS_pair.client_address = clients[index]
+        CS_pair.server_address = servers[index]
+        if CS_pair not in myarray:
+            myarray.append()
+            myarray[index].client_address = clients[index]
+            myarray[index].server_address = servers[index]
+            print(myarray[index].client_address+'      '+myarray[index].server_address)
         
 #    with open('discoveryoutput.txt') as file:
 #        file_contents = file.read()
