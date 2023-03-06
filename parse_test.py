@@ -67,7 +67,7 @@ def pidtest():
         service_code_name_row = service_code_name_pair()
         service_code_name_row.service_code = service_codes[index]
         service_code_name_row.service_name = service_names[index]
-        if service_code_name_row not in services_list:
+        if service_code_name_row not in myarray[0].services_list:
             myarray[0].services_list.append(service_code_name_row)
     #if server address is 8 greater than client address, then we will scan the pair for pids
     if(  (int('00000720', base=16)+8) == int('00000728', base=16)  ):
