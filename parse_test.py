@@ -12,7 +12,9 @@ my_dict = {
     'SERVER': re.compile(r'\b0x[0-9A-Fa-f]+\b \| 0x(?P<SERVER>[0-9A-Fa-f]+)\b \|'),
 }
 
-
+class server_client_pair:
+    server_address
+    client_address
 
 def main():
 
@@ -28,7 +30,28 @@ def main():
         #print(file_contents)
         #return file_contents
     #subprocess.call("python cc.py uds services 0x720 0x728")
-    os.system("python cc.py uds services 0x720 0x728 > services_out.txt")
+    # cmd.run 'python cc.py uds discovery -min 0x000 -max 0xfff'
+    os.system("python cc.py uds discovery -min 0x000 -max 0xfff' >  discovery_output.txt")
+    #subprocess.call('ls', '-l')
+    with open('discovery_output.txt') as file:
+        discovery_file_contents = file.read()
+    clients = my_dict['CLIENT'].findall(discovery_file_contents)
+    servers = my_dict['SERVER'].findall(discovery_file_contents)
+    print('discovery_output clients \n')
+    for x in clients:
+        print(x)
+    print('discovery_output servers \n')
+    for x in servers:
+        print(x)
+        
+        
+#    with open('discoveryoutput.txt') as file:
+#        file_contents = file.read()
+        #print(file_contents)
+        #return file_contents
+        
+    #subprocess.call("python cc.py uds services 0x720 0x728")
+    os.system("python cc.py uds discovery -min 0x600 -max 0x7ff > discovery_out.txt")
     #subprocess.call('ls', '-l')
     with open('services_out.txt') as file:
         services_file_contents = file.read()
