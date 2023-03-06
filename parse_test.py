@@ -13,8 +13,8 @@ my_dict = {
 }
 
 class server_client_pair:
-    server_address
-    client_address
+    server_address = None
+    client_address = None
 
 def main():
 
