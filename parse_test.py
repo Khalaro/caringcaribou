@@ -84,63 +84,22 @@ def main():
             #print(file_contents)
             #return file_contents
         
-    #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
-    #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
-    #subprocess.call('ls', '-l')
-    with open('services_out.txt') as file:
-        services_file_contents = file.read()
-#    clients = my_dict['CLIENT'].findall(file_contents)
-#    servers = my_dict['SERVER'].findall(file_contents)
-#    print('clients \n')
-#    for x in clients:
-#        print(x)
-#    print('servers \n')
-#    for x in servers:
-#        print(x)
-    print('service_names \n')
-    for x in service_names:
-        print(x)
-    print('service_codes \n')
-    for x in service_codes:
-        print(x)
-        
-    #os.system("python cc.py uds services 0x7e0 0x7e8 > services_out.txt")
-    #subprocess.call('ls', '-l')
-    with open('services_out.txt') as file:
-        services_file_contents = file.read()
-#    clients = my_dict['CLIENT'].findall(file_contents)
-#    servers = my_dict['SERVER'].findall(file_contents)
-    service_names = my_dict['SERVICE_NAME'].findall(services_file_contents)
-    service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
-#    print('clients \n')
-#    for x in clients:
-#        print(x)
-#    print('servers \n')
-#    for x in servers:
-#        print(x)
-    print('service_names \n')
-    for x in service_names:
-        print(x)
-    print('service_codes \n')
-    for x in service_codes:
-        print(x)
-
-
-
-
-def _parse_line(line):
-    """
-    Do a regex search against all defined regexes and
-    return the key and match result of the first matching regex
-
-    """
-
-    for key, rx in rx_dict.items():
-        match = rx.search(line)
-        if match:
-            return key, match
-    # if there are no matches
-    return None, None
     
+    #for CS_pair in myarray:
+        
+    #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
+    #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
+    #subprocess.call('ls', '-l')
+    with open('services_out.txt') as file:
+        services_file_contents = file.read()
+#    clients = my_dict['CLIENT'].findall(file_contents)
+#    servers = my_dict['SERVER'].findall(file_contents)
+#    print('clients \n')
+#    for x in clients:
+#        print(x)
+#    print('servers \n')
+#    for x in servers:
+#        print(x)
+
     
 main()
