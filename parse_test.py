@@ -136,7 +136,14 @@ def main():
             if service_code_name_row not in CS_pair.services_list:
                 CS_pair.services_list.append(service_code_name_row)
         #if server address is 8 greater than client address, then we will scan the pair for pids
-        if(  (int(CS_pair.server_address, base=16)+8) == int(CS_pair.client_address, base=16)  ):
+        if( True  ): #(int(CS_pair.server_address, base=16)+8) == int(CS_pair.client_address, base=16) 
+            print(CS_pair.server_address +'    '+CS_pair.client_address)
+            print(   (int(CS_pair.server_address, base=16)+8) == int(CS_pair.client_address, base=16) )
+            print('/n')
+            print(   (int(CS_pair.server_address, base=16)+8) )
+            print('/n')
+            print( int(CS_pair.client_address, base=16) )
+            print('/n')
             #python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190  0x720 0x728        
             #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
             os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
