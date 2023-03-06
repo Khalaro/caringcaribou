@@ -112,7 +112,7 @@ def main():
         print('server_address   |   client_address \n')
         print(CS_pair.server_address + '  |   '+  CS_pair.client_address+'\n')
         print('PIDS   |   VALUES \n')
-        for pid in CSpair.pid_list:
+        for pid in CS_pair.pid_list:
             print(pid.pid_code + ' : ' + pid.data_value + '\n')
         
     #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
