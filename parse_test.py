@@ -139,7 +139,7 @@ def main():
             #Enable for live scanning
             os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
             #with open( 'services_out_backup.txt'  )as file:
-            #with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
+            with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
                 services_file_contents = file.read()
             service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
             service_names = my_dict['SERVICE_NAME'].findall(services_file_contents)
