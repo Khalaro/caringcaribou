@@ -42,7 +42,7 @@ class client_server_pair:
         else:
             return False
     def is_valid():
-        if ( (int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16) ):
+        if ( (int(self.client_address, base=16)+8) == int(self.server_address, base=16) ):
             return True
         else:
             return False
