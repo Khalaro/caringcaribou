@@ -41,7 +41,7 @@ class client_server_pair:
             return True
         else:
             return False
-    def is_valid_pair():
+    def is_valid_pair(self):
         if ( (int(self.client_address, base=16)+8) == int(self.server_address, base=16) ):
             return True
         else:
