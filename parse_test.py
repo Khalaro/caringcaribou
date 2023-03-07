@@ -48,8 +48,8 @@ class client_server_pair:
             return False
     server_address = None
     client_address = None
-    services_list = []
-    pid_list =[]
+    services_list = [] # class service_code_name_pair
+    pid_list =[] # class pid_value_pair
 
     
     
