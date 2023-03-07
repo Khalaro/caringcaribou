@@ -41,7 +41,7 @@ class client_server_pair:
             return True
         else:
             return False
-    def is_valid():
+    def is_valid_pair():
         if ( (int(self.client_address, base=16)+8) == int(self.server_address, base=16) ):
             return True
         else:
@@ -118,7 +118,7 @@ def main():
         CS_pair = client_server_pair()
         CS_pair.client_address = clients[index]
         CS_pair.server_address = servers[index]
-        if CS_pair.is_valid(): 
+        if CS_pair.is_valid_pair(): 
             if CS_pair not in myarray:
                 myarray.append(CS_pair)
     print('discovery_output: \n clients     servers \n')
