@@ -109,7 +109,7 @@ def main():
     #subprocess.call("python cc.py uds services 0x720 0x728")
     # cmd.run 'python cc.py uds discovery -min 0x000 -max 0xfff'
     #os.system("python cc.py uds discovery -min 0x600 -max 0x7ff >  discovery_output.txt")
-    #os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
+    os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
     #subprocess.call('ls', '-l')
     with open('discovery_output.txt') as file:
         discovery_file_contents = file.read()
@@ -137,8 +137,8 @@ def main():
             print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
 
             #Enable for live scanning
-            #os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-            with open( 'services_out_backup.txt'  )as file:
+            os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+            #with open( 'services_out_backup.txt'  )as file:
             #with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
                 services_file_contents = file.read()
             service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
@@ -159,21 +159,30 @@ def main():
             hex_values = [  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ]
             for val in hex_values:
                 print("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(val, val, CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,val,val ) )
-                        
-
+                os.system("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(val, val, CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,val,val ) )
+            
+            
+            for val in hex_values:
+                with open( "pids_out_%s_%s_%s000_%sfff.txt"%( CS_pair.client_address, CS_pair.server_address,val,val ) )as file:
+                #with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:    
+                #with open( 'dup_dids_6000_7000_720_728.txt' )as file:
+                    pid_file_contents = file.read()        
+                pid_codes = my_dict['PID'].findall(pid_file_contents)
+                pid_data_values = my_dict['VALUE'].findall(pid_file_contents)                       
+                for index,pid in enumerate(pid_codes):
+                    pid_row = pid_value_pair()
+                    pid_row.pid_code=pid_codes[index]
+                    pid_row.data_value=pid_data_values[index]
+                    print( 'PIDS: '+pid_codes[index] + '        '+   pid_data_values[index]    )
+                    CS_pair.pid_list.append(pid_row)
                 
-            with open( 'dup_dids_6000_7000_720_728.txt' )as file:
-            #with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:    
-                pid_file_contents = file.read()        
-            pid_codes = my_dict['PID'].findall(pid_file_contents)
-            pid_data_values = my_dict['VALUE'].findall(pid_file_contents)
+    #        with open( 'dup_dids_6000_7000_720_728.txt' )as file:
+    #        #with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:    
+    #            pid_file_contents = file.read()        
+    #        pid_codes = my_dict['PID'].findall(pid_file_contents)
+    #        pid_data_values = my_dict['VALUE'].findall(pid_file_contents)
 
-            for index,pid in enumerate(pid_codes):
-                pid_row = pid_value_pair()
-                pid_row.pid_code=pid_codes[index]
-                pid_row.data_value=pid_data_values[index]
-                print( 'PIDS: '+pid_codes[index] + '        '+   pid_data_values[index]    )
-                CS_pair.pid_list.append(pid_row)
+
     
 #    for CS_pair in myarray:
 #        print('server_address   |   client_address \n')
