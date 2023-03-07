@@ -78,6 +78,8 @@ def pidtest():
         #python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190  0x720 0x728        
         #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         print("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%('00000720', '00000728', '00000720', '00000728') )
+        #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0x1000 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+
         #os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         with open("pids_out_%s_%s.txt"%('00000720', '00000728' ) )as file:
             pid_file_contents = file.read()        
@@ -131,16 +133,10 @@ def main():
         #if server address is 8 greater than client address, then we will scan the pair for pids
         if( True  ): # (int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16) 
             # equivalent of CS_pair.is_valid() - obsolete and redundant
-        #if( (int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16)   ): #(int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16) 
-            #print(CS_pair.server_address +'    '+CS_pair.client_address)
-            #print(   (int(CS_pair.server_address, base=16)+8) == int(CS_pair.client_address, base=16) )
-            #print('/n')
-            #print(   (int(CS_pair.server_address, base=16)+8) )
-            #print('/n')
-            #print( int(CS_pair.client_address, base=16) )
-            #print('/n')
-            print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
             
+            print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+
+            #Enable for live scanning
             #os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
             with open( 'services_out_backup.txt'  )as file:
             #with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
@@ -159,7 +155,17 @@ def main():
                 #os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
                 
                 #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-                                
+                print("python cc.py uds dump_dids --min_did 0x0000 --max_did 0x1000 0x%s 0x%s > pids_out_%s_%s_0000_1000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x1000 --max_did 0x2000 0x%s 0x%s > pids_out_%s_%s_1000_2000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x2000 --max_did 0x3000 0x%s 0x%s > pids_out_%s_%s_2000_3000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x3000 --max_did 0x4000 0x%s 0x%s > pids_out_%s_%s_3000_4000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x4000 --max_did 0x5000 0x%s 0x%s > pids_out_%s_%s_4000_5000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x5000 --max_did 0x6000 0x%s 0x%s > pids_out_%s_%s_5000_6000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x6000 --max_did 0x7000 0x%s 0x%s > pids_out_%s_%s_6000_7000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x7000 --max_did 0x8000 0x%s 0x%s > pids_out_%s_%s_7000_8000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x8000 --max_did 0x9000 0x%s 0x%s > pids_out_%s_%s_8000_9000.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                print("python cc.py uds dump_dids --min_did 0x9000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s_9000_ffff.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                                          
                 with open( 'dup_dids_6000_7000_720_728.txt' )as file:
                 #with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:    
                     pid_file_contents = file.read()        
@@ -180,9 +186,7 @@ def main():
 #        for pid in CS_pair.pid_list:
 #            print(pid.pid_code + ' : ' + pid.data_value + '\n')
         
-    #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
-    #subprocess.call("python cc.py uds services 0x720 0x728 > services_out.txt")
-    #subprocess.call('ls', '-l')
+    
 #    clients = my_dict['CLIENT'].findall(file_contents)
 #    servers = my_dict['SERVER'].findall(file_contents)
 #    print('clients \n')
