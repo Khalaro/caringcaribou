@@ -157,8 +157,8 @@ def main():
             #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
             print( 'PID scanning for  ' +  CS_pair.client_address +'    '+ CS_pair.server_address )
             hex_values = [  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ]
-            for i in range(hex_values):
-                print("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(hex_values[i], hex_values[i], CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,hex_values[i], hex_values[i] ) )
+            for val in hex_values:
+                print("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(val, val, CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,val,val )
                         
 
                 
