@@ -41,6 +41,11 @@ class client_server_pair:
             return True
         else:
             return False
+    def is_valid():
+        if ( (int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16) ):
+            return True
+        else:
+            return False
     server_address = None
     client_address = None
     services_list = []
@@ -113,7 +118,7 @@ def main():
         CS_pair = client_server_pair()
         CS_pair.client_address = clients[index]
         CS_pair.server_address = servers[index]
-        if CS_pair not in myarray:
+        if ( (CS_pair not in myarray) and CS_pair.is_valid() ):
             myarray.append(CS_pair)
     print('discovery_output: \n clients     servers \n')
     for CS_pair in myarray:        
@@ -123,7 +128,9 @@ def main():
     
     for CS_pair in myarray:      
         #if server address is 8 greater than client address, then we will scan the pair for pids
-        if( (int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16)   ): #(int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16) 
+        if( True  ): # (int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16) 
+            # equivalent of CS_pair.is_valid() - obsolete and redundant
+        #if( (int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16)   ): #(int(CS_pair.client_address, base=16)+8) == int(CS_pair.server_address, base=16) 
             #print(CS_pair.server_address +'    '+CS_pair.client_address)
             #print(   (int(CS_pair.server_address, base=16)+8) == int(CS_pair.client_address, base=16) )
             #print('/n')
