@@ -62,8 +62,7 @@ def main():
     #subprocess.call("python cc.py uds services 0x720 0x728")
     # cmd.run 'python cc.py uds discovery -min 0x000 -max 0xfff'
     #os.system("python cc.py uds discovery -min 0x600 -max 0x7ff >  discovery_output.txt")
-    if not os.path.isfile('discovery_output.txt'):
-        os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
+    os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
     #subprocess.call('ls', '-l')
     with open('discovery_output.txt') as file:
         discovery_file_contents = file.read()
@@ -87,9 +86,7 @@ def main():
         print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
 
         #Enable for live scanning
-        
-        if not os.path.isfile('services_out_%s_%s.txt'%( CS_pair.client_address, CS_pair.server_address)):
-            os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+        os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         #with open( 'services_out_backup.txt'  )as file:
         with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
             services_file_contents = file.read()
@@ -111,8 +108,7 @@ def main():
         hex_values = [  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ]
         for val in hex_values:
             print("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(val, val, CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,val,val ) )
-            if not os.path.isfile('pids_out_%s_%s_%s000_%sfff.txt'%(CS_pair.client_address, CS_pair.server_address,val,val )):
-                os.system("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(val, val, CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,val,val ) )
+            os.system("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(val, val, CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,val,val ) )
 
 
         for val in hex_values:
