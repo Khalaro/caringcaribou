@@ -118,8 +118,9 @@ def main():
         CS_pair = client_server_pair()
         CS_pair.client_address = clients[index]
         CS_pair.server_address = servers[index]
-        if ( (CS_pair not in myarray) and CS_pair.is_valid() ):
-            myarray.append(CS_pair)
+        if CS_pair.is_valid(): 
+            if CS_pair not in myarray:
+                myarray.append(CS_pair)
     print('discovery_output: \n clients     servers \n')
     for CS_pair in myarray:        
         print(CS_pair.client_address+'      '+CS_pair.server_address)
