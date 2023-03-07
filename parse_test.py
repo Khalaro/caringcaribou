@@ -132,8 +132,10 @@ def main():
             #print( int(CS_pair.client_address, base=16) )
             #print('/n')
             print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-            os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-            with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
+            
+            #os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+            with open( 'services_out_backup.txt'  )as file:
+            #with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
                 services_file_contents = file.read()
             service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
             service_names = my_dict['SERVICE_NAME'].findall(services_file_contents)
@@ -147,8 +149,11 @@ def main():
                 #python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190  0x720 0x728        
                 #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
                 #os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-                os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-                with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
+                
+                #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+                                
+                with open( 'dup_dids_6000_7000_720_728.txt' )as file:
+                #with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:    
                     pid_file_contents = file.read()        
                 pid_codes = my_dict['PID'].findall(pid_file_contents)
                 pid_data_values = my_dict['VALUE'].findall(pid_file_contents)
