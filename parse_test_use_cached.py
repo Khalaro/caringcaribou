@@ -82,8 +82,8 @@ def main():
         print(CS_pair.client_address+'      '+CS_pair.server_address)
         
         
-    
-    for CS_pair in myarray:      
+
+    for CS_pair in myarray:        
         print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
 
         #Enable for live scanning
@@ -101,11 +101,21 @@ def main():
             service_code_name_row.service_code = service_codes[index]
             service_code_name_row.service_name = service_names[index]
             if service_code_name_row not in CS_pair.services_list:
-                CS_pair.services_list.append(service_code_name_row)
+                CS_pair.services_list.append(service_code_name_row)        
+        
+    service_out_file = open( 'services_out.txt', 'w' )
+    for Client_Server_pair in myarray:
+        service_out_file.write('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address, 'w')
+        print('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address)
+        for service_code_pair in Client_Server_pair.services_list:
+            print(service_code_pair.service_code+'  :  '+ service_code_pair.service_name )
+            service_out_file.write(printservice_code.service_code+'  :  '+ service_code.service_name, 'w')
+    service_out_file.close()            
+        
+        
+    for CS_pair in myarray:      
         #python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190  0x720 0x728        
-        #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         #os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-
         #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         print( 'PID scanning for  ' +  CS_pair.client_address +'    '+ CS_pair.server_address )
         hex_values = [  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ]
@@ -128,6 +138,7 @@ def main():
                 pid_row.data_value=pid_data_values[index]
                 print( 'PIDS: '+pid_codes[index] + '        '+   pid_data_values[index]    )
                 CS_pair.pid_list.append(pid_row)
+                
 
 #        with open( 'dup_dids_6000_7000_720_728.txt' )as file:
 #        #with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:    
