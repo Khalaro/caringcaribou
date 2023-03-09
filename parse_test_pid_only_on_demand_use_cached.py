@@ -46,6 +46,23 @@ class client_server_pair:
             return True
         else:
             return False
+    def query_pid(self, min, max): # ex.  self.query_pid("6182","6184")
+        print( 'PID scanning for  ' +  self.client_address +'    '+ self.server_address )
+        print("python cc.py uds dump_dids --min_did 0x%s --max_did 0x%s 0x%s 0x%s > pids_out_%s_%s_%s_%s.txt"%(min,max, self.client_address, self.server_address, self.client_address, self.server_address,min,max ) )
+        if not os.path.isfile('pids_out_%s_%s_%s_%s.txt'%(self.client_address, self.server_address, min, max )):
+            os.system("python cc.py uds dump_dids --min_did 0x%s --max_did 0x%s 0x%s 0x%s > pids_out_%s_%s_%s_%s.txt"%(min,max, self.client_address, self.server_address, self.client_address, self.server_address,min,max ) )
+
+
+        with open( "pids_out_%s_%s_%s_%s.txt"%( self.client_address, self.server_address,min,max ) )as file:
+            pid_file_contents = file.read()        
+        pid_codes = my_dict['PID'].findall(pid_file_contents)
+        pid_data_values = my_dict['VALUE'].findall(pid_file_contents)                       
+        for index,pid in enumerate(pid_codes):
+            pid_row = pid_value_pair()
+            pid_row.pid_code=pid_codes[index]
+            pid_row.data_value=pid_data_values[index]
+            print( 'PIDS: '+pid_codes[index] + '        '+   pid_data_values[index]    )
+            self.pid_list.append(pid_row)
     server_address = None
     client_address = None
     services_list = [] # class service_code_name_pair
@@ -112,32 +129,7 @@ def main():
             service_out_file.write(service_code_pair.service_code+'  :  '+ service_code_pair.service_name)
     service_out_file.close()            
         
-        
-    for CS_pair in myarray:      
-        #python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190  0x720 0x728        
-        #os.system("python cc.py uds dump_dids --min_did 0x6180 --max_did 0x6190 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-        #os.system("python cc.py uds dump_dids --min_did 0x0000 --max_did 0xffff 0x%s 0x%s > pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-        print( 'PID scanning for  ' +  CS_pair.client_address +'    '+ CS_pair.server_address )
-        hex_values = [  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ]
-        for val in hex_values:
-            print("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(val, val, CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,val,val ) )
-            if not os.path.isfile('pids_out_%s_%s_%s000_%sfff.txt'%(CS_pair.client_address, CS_pair.server_address,val,val )):
-                os.system("python cc.py uds dump_dids --min_did 0x%s000 --max_did 0x%sfff 0x%s 0x%s > pids_out_%s_%s_%s000_%sfff.txt"%(val, val, CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address,val,val ) )
 
-
-        for val in hex_values:
-            with open( "pids_out_%s_%s_%s000_%sfff.txt"%( CS_pair.client_address, CS_pair.server_address,val,val ) )as file:
-            #with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:    
-            #with open( 'dup_dids_6000_7000_720_728.txt' )as file:
-                pid_file_contents = file.read()        
-            pid_codes = my_dict['PID'].findall(pid_file_contents)
-            pid_data_values = my_dict['VALUE'].findall(pid_file_contents)                       
-            for index,pid in enumerate(pid_codes):
-                pid_row = pid_value_pair()
-                pid_row.pid_code=pid_codes[index]
-                pid_row.data_value=pid_data_values[index]
-                print( 'PIDS: '+pid_codes[index] + '        '+   pid_data_values[index]    )
-                CS_pair.pid_list.append(pid_row)
                 
 
 #        with open( 'dup_dids_6000_7000_720_728.txt' )as file:
