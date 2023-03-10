@@ -37,8 +37,8 @@ class service_code_name_pair:
     
 class client_server_pair:
     def __init__(self, client_id, server_id):
-        server_address = server_id
-        client_address = client_id
+        self.server_address = server_id
+        self.client_address = client_id
     def __eq__(self, other):
         if ((self.server_address == other.server_address) and (self.client_address == other.client_address)):
             return True
