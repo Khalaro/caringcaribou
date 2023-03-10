@@ -74,24 +74,19 @@ class client_server_pair:
 def main():
     if not os.path.isfile('discovery_output.txt'):
         os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
-    #subprocess.call('ls', '-l')
     with open('discovery_output.txt') as file:
         discovery_file_contents = file.read()
     clients = my_dict['CLIENT'].findall(discovery_file_contents)
     servers = my_dict['SERVER'].findall(discovery_file_contents)
     myarray = []
     for index,value in enumerate(clients):    
-        CS_pair = client_server_pair()
-        CS_pair.client_address = clients[index]
-        CS_pair.server_address = servers[index]
+        CS_pair = client_server_pair(clients[index], servers[index])
         if CS_pair.is_valid_pair(): 
             if CS_pair not in myarray:
                 myarray.append(CS_pair)
     print('discovery_output: \n clients     servers \n')
     for CS_pair in myarray:        
         print(CS_pair.client_address+'      '+CS_pair.server_address)
-        
-        
 
     for CS_pair in myarray:        
         print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
@@ -117,34 +112,5 @@ def main():
             service_out_file.write(service_code_pair.service_code+'  :  '+ service_code_pair.service_name)
     service_out_file.close()            
         
-
-                
-
-#        with open( 'dup_dids_6000_7000_720_728.txt' )as file:
-#        #with open("pids_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:    
-#            pid_file_contents = file.read()        
-#        pid_codes = my_dict['PID'].findall(pid_file_contents)
-#        pid_data_values = my_dict['VALUE'].findall(pid_file_contents)
-
-
-    
-#    for CS_pair in myarray:
-#        print('server_address   |   client_address \n')
-#        print(CS_pair.server_address + '  |   '+  CS_pair.client_address+'\n')
-#        print('PIDS   |   VALUES \n')
-#        for pid in CS_pair.pid_list:
-#            print(pid.pid_code + ' : ' + pid.data_value + '\n')
-        
-    
-#    clients = my_dict['CLIENT'].findall(file_contents)
-#    servers = my_dict['SERVER'].findall(file_contents)
-#    print('clients \n')
-#    for x in clients:
-#        print(x)
-#    print('servers \n')
-#    for x in servers:
-#        print(x)
-
     
 main()
-#pidtest()
