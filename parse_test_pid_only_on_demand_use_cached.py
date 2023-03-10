@@ -40,7 +40,12 @@ class client_server_pair:
         self.server_address = server_id
         self.client_address = client_id
     def __eq__(self, other):
-        if ((self.server_address == other.server_address) and (self.client_address == other.client_address)):
+        if ( self.values_match(other.client_address, other.server_address)):
+            return True
+        else:
+            return False
+    def values_match(self, client_id, server_id):  #(string client_id, string server_id)
+        if (    int(self.client_address, base=16) == int(client_id, base=16)  and  int(self.server_address, base=16) == int(server_id, base=16)   ):
             return True
         else:
             return False
