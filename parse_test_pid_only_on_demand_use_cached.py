@@ -12,7 +12,7 @@ my_dict = {
     'SERVICE_NAME': re.compile(r'Supported service 0x[0-9A-Fa-f]+: (?P<SERVICE_NAME>[^\\\n]+) ?'),
     'SERVICE_CODE': re.compile(r'Supported service (?P<SERVICE_CODE>0x[0-9A-Fa-f]+): [^\\\n]+ ?'),
     'PID': re.compile(r'0x(?P<PID>[0-9A-Fa-f]+) [0-9A-Fa-f]+?'),
-    'VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'),  #    (0x[0-9A-Fa-f]+) ([0-9A-Fa-f]+)?
+    'VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'), 
     'KEY': re.compile(r'.'),
 }
 
@@ -36,6 +36,7 @@ class service_code_name_pair:
     service_name = None
     
 class client_server_pair:
+    def __init__(self, f, s):
     def __eq__(self, other):
         if ((self.server_address == other.server_address) and (self.client_address == other.client_address)):
             return True
@@ -46,14 +47,13 @@ class client_server_pair:
             return True
         else:
             return False
-    def query_pid(self, min, max): # ex.  self.query_pid("6182","6184")
+    def query_pids(self, min_pid, max_pid): # ex.  self.query_pid("6182","6184")
         print( 'PID scanning for  ' +  self.client_address +'    '+ self.server_address )
-        print("python cc.py uds dump_dids --min_did 0x%s --max_did 0x%s 0x%s 0x%s > pids_out_%s_%s_%s_%s.txt"%(min,max, self.client_address, self.server_address, self.client_address, self.server_address,min,max ) )
-        if not os.path.isfile('pids_out_%s_%s_%s_%s.txt'%(self.client_address, self.server_address, min, max )):
-            os.system("python cc.py uds dump_dids --min_did 0x%s --max_did 0x%s 0x%s 0x%s > pids_out_%s_%s_%s_%s.txt"%(min,max, self.client_address, self.server_address, self.client_address, self.server_address,min,max ) )
+        print("python cc.py uds dump_dids --min_did 0x%s --max_did 0x%s 0x%s 0x%s > pids_out_%s_%s_%s_%s.txt"%(min_pid,max_pid, self.client_address, self.server_address, self.client_address, self.server_address,min_pid,max_pid ) )
+        if not os.path.isfile('pids_out_%s_%s_%s_%s.txt'%(self.client_address, self.server_address, min_pid, max_pid )):
+            os.system("python cc.py uds dump_dids --min_did 0x%s --max_did 0x%s 0x%s 0x%s > pids_out_%s_%s_%s_%s.txt"%(min_pid,max_pid, self.client_address, self.server_address, self.client_address, self.server_address,min_pid,max_pid ) )
 
-
-        with open( "pids_out_%s_%s_%s_%s.txt"%( self.client_address, self.server_address,min,max ) )as file:
+        with open( "pids_out_%s_%s_%s_%s.txt"%( self.client_address, self.server_address,min_pid,max_pid ) )as file:
             pid_file_contents = file.read()        
         pid_codes = my_dict['PID'].findall(pid_file_contents)
         pid_data_values = my_dict['VALUE'].findall(pid_file_contents)                       
@@ -71,14 +71,6 @@ class client_server_pair:
     
 
 def main():
-
-#    with open('discoveryoutput.txt') as file:
-#        file_contents = file.read()
-        #print(file_contents)
-        #return file_contents
-    #subprocess.call("python cc.py uds services 0x720 0x728")
-    # cmd.run 'python cc.py uds discovery -min 0x000 -max 0xfff'
-    #os.system("python cc.py uds discovery -min 0x600 -max 0x7ff >  discovery_output.txt")
     if not os.path.isfile('discovery_output.txt'):
         os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
     #subprocess.call('ls', '-l')
@@ -107,7 +99,6 @@ def main():
         
         if not os.path.isfile('services_out_%s_%s.txt'%( CS_pair.client_address, CS_pair.server_address)):
             os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-        #with open( 'services_out_backup.txt'  )as file:
         with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
             services_file_contents = file.read()
         service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
