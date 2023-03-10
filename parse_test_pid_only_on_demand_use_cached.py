@@ -36,7 +36,9 @@ class service_code_name_pair:
     service_name = None
     
 class client_server_pair:
-    def __init__(self, f, s):
+    def __init__(self, client_id, server_id):
+        server_address = server_id
+        client_address = client_id
     def __eq__(self, other):
         if ((self.server_address == other.server_address) and (self.client_address == other.client_address)):
             return True
@@ -52,7 +54,6 @@ class client_server_pair:
         print("python cc.py uds dump_dids --min_did 0x%s --max_did 0x%s 0x%s 0x%s > pids_out_%s_%s_%s_%s.txt"%(min_pid,max_pid, self.client_address, self.server_address, self.client_address, self.server_address,min_pid,max_pid ) )
         if not os.path.isfile('pids_out_%s_%s_%s_%s.txt'%(self.client_address, self.server_address, min_pid, max_pid )):
             os.system("python cc.py uds dump_dids --min_did 0x%s --max_did 0x%s 0x%s 0x%s > pids_out_%s_%s_%s_%s.txt"%(min_pid,max_pid, self.client_address, self.server_address, self.client_address, self.server_address,min_pid,max_pid ) )
-
         with open( "pids_out_%s_%s_%s_%s.txt"%( self.client_address, self.server_address,min_pid,max_pid ) )as file:
             pid_file_contents = file.read()        
         pid_codes = my_dict['PID'].findall(pid_file_contents)
@@ -94,16 +95,12 @@ def main():
 
     for CS_pair in myarray:        
         print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
-
-        #Enable for live scanning
-        
         if not os.path.isfile('services_out_%s_%s.txt'%( CS_pair.client_address, CS_pair.server_address)):
             os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
             services_file_contents = file.read()
         service_codes = my_dict['SERVICE_CODE'].findall(services_file_contents)
         service_names = my_dict['SERVICE_NAME'].findall(services_file_contents)
-
         for index,value in enumerate(service_codes):
             service_code_name_row = service_code_name_pair()
             service_code_name_row.service_code = service_codes[index]
