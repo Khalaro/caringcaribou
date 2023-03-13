@@ -55,7 +55,7 @@ class client_server_pair:
             return True
         else:
             return False
-    def get_pid_indices(self): # return a list of 16 bools representing support for pids 1-16 on this ECU
+    def get_pid_indices(self): # return a list of 16 bools representing support for pids 1-32 on this ECU
         if not os.path.isfile('pid_indices_out.txt'):
             os.system("obd.query test_pid01 mode=01 pid=01 header=\"'%'\" bytes=4  protocol=6 force=true  >> pid_indices_out.txt"%(self.client_address))
         with open('pid_indices_out.txt') as file:
