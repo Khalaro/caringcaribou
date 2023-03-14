@@ -25,7 +25,7 @@ def check_service_mode9(): # return a list of 32 bools representing support for 
     with open('pid_indices_out.txt') as file:
     pid_indices_file_contents = file.read()
     pid_supported_list = [True,]  #we create index 0 so later indices correlate to pids
-    pid_index_binary_string=((my_dict['PID_KEYv2'].findall(pid_indices_file_contents))[0])[2:34]
+    pid_index_binary_string=((my_dict['PID_KEYv2'].findall(pid_indices_file_contents))[0])[17:49]
     print(pid_index_binary_string)
     for binary_digit in pid_index_binary_string:
         if binary_digit=='1':
@@ -34,12 +34,8 @@ def check_service_mode9(): # return a list of 32 bools representing support for 
             pid_supported_list.append(False)
     print(pid_supported_list)
     for index, inx in enumerate(pid_supported_list):
-        #print(inx)
         if inx:
             print('supported PID:')
-            print(hex(index))
-        else:
-            print('UNsupported PID:')
             print(hex(index))
 
 
