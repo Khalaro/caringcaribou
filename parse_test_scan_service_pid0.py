@@ -19,12 +19,11 @@ my_dict = {
 }
 
 
-def check_service_mode9(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
+def check_service_mode9(): # return a list of 32 bools representing support for pids 1-32 on this ECU
     if not os.path.isfile('pid_indices_out.txt'):
         os.system("obd.query test_pid00 mode=09 pid="'0'" header="'7df'" formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true   >> pid_indices_out.txt")
     with open('pid_indices_out.txt') as file:
     pid_indices_file_contents = file.read()
-    pid_index_binary_string=(my_dict['PID_KEY'].findall(pid_indices_file_contents))[0]
     pid_supported_list = [True,]  #we create index 0 so later indices correlate to pids
     pid_index_binary_string=((my_dict['PID_KEYv2'].findall(pid_indices_file_contents))[0])[2:34]
     print(pid_index_binary_string)
@@ -45,8 +44,7 @@ def check_service_mode9(self): # return a list of 32 bools representing support 
 
 
 def main():
-    if not os.path.isfile('discovery_output.txt'):
-        os.system("python cc.py uds discovery -min 0x000 -max 0xfff >  discovery_output.txt")
+    service_key=check_service_mode9()
   
     
 main()
