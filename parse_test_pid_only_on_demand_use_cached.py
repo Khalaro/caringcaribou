@@ -58,13 +58,13 @@ class client_server_pair:
             return False
     def get_pid_indices(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
         if not os.path.isfile('pid_indices_out.txt'):
-            os.system("obd.query test_pid00 mode=09 pid="'0'" header="'7df'" bytes=4 formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true   >> pid_indices_out.txt")
+            os.system("obd.query test_pid00 mode=09 pid="'0'" header="'7df'" formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true   >> pid_indices_out.txt")
         with open('pid_indices_out.txt') as file:
         pid_indices_file_contents = file.read()
         pid_index_binary_string=(my_dict['PID_KEY'].findall(pid_indices_file_contents))[0]
         pid_supported_list = [True,]  #we create index 0 so later indices correlate to pids
-        pid_index_binary_string=((my_dict['PID_KEYv2'].findall(pid_indices_file_contents))[0])[2:]
-        #print(pid_index_hex_string)
+        pid_index_binary_string=((my_dict['PID_KEYv2'].findall(pid_indices_file_contents))[0])[2:34]
+        print(pid_index_binary_string)
         for binary_digit in pid_index_binary_string:
             if binary_digit=='1':
                 pid_supported_list.append(True)
@@ -75,6 +75,9 @@ class client_server_pair:
             #print(inx)
             if inx:
                 print('supported PID:')
+                print(hex(index))
+            else:
+                print('UNsupported PID:')
                 print(hex(index))
         
     def query_pids(self, min_pid, max_pid): # ex.  self.query_pid("6182","6184")
