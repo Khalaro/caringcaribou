@@ -19,7 +19,7 @@ my_dict = {
 }
 
 
-def get_pid_indices(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
+def check_service_mode9(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
     if not os.path.isfile('pid_indices_out.txt'):
         os.system("obd.query test_pid00 mode=09 pid="'0'" header="'7df'" formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true   >> pid_indices_out.txt")
     with open('pid_indices_out.txt') as file:
