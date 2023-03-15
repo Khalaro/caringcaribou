@@ -58,12 +58,27 @@ class client_server_pair:
         else:
             return False
     def check_ecu_name(): 
-        if not os.path.isfile('pid_indices_out.txt'):
+        if not os.path.isfile("ecu_name_%_out.txt"%(self.server_address,)):
             os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%_out.txt"%(self.server_address,self.server_address))
         with open('ecu_name_%_out.txt'%(self.server_address,)) as file:
             ecu_name_file_contents = file.read()
         self.ecu_name=(my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
-        print(self.ecu_name)
+        #print(self.ecu_name)
+        
+    def check_service_mode9(): # return a list of 32 bools representing support for pids 1-32 on this ECU
+        if not os.path.isfile("pid_indices_%_out.txt"%(self.server_address,)):
+            os.system("autopi obd.query test_pid00 mode=09 pid='0' header='%' formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%_out.txt"%(self.server_address,self.server_address))
+        with open("pid_indices_%_out.txt"%(self.server_address,)) as file:
+            pid_indices_file_contents = file.read()
+        pid_supported_list = [True,]  #we create index 0 so later indices correlate to pids
+        pid_index_binary_string=((my_dict['PID_KEYv2'].findall(pid_indices_file_contents))[0])[17:49]
+        print(pid_index_binary_string)
+        for binary_digit in pid_index_binary_string:
+            if binary_digit=='1':
+                pid_supported_list.append(True)
+            else:
+                pid_supported_list.append(False)
+        return pid_supported_list
 
     def get_pid_indices(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
         if not os.path.isfile('pid_indices_out.txt'):
@@ -146,7 +161,8 @@ def main():
 
     service_out_file = open( 'services_out.txt', 'w' )
     for Client_Server_pair in myarray:
-        print('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address)
+        Client_Server_pair.check_ecu_name()
+        print('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address + '  ECU NAME:  ' + Client_Server_pair.ecu_name)
         service_out_file.write('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address)
         for service_code_pair in Client_Server_pair.services_list:
             print(service_code_pair.service_code+'  :  '+ service_code_pair.service_name )
