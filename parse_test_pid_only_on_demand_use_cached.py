@@ -62,7 +62,7 @@ class client_server_pair:
             os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%_out.txt"%(self.server_address,self.server_address))
         with open('ecu_name_%_out.txt'%(self.server_address,)) as file:
             ecu_name_file_contents = file.read()
-        self.ecu_name=((my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
+        self.ecu_name=(my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
         print(self.ecu_name)
 
     def get_pid_indices(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
