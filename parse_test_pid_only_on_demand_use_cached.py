@@ -57,7 +57,7 @@ class client_server_pair:
             return True
         else:
             return False
-    def check_ecu_name(): 
+    def check_ecu_name(self): 
         if not os.path.isfile("ecu_name_%_out.txt"%(self.server_address,)):
             os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%_out.txt"%(self.server_address,self.server_address))
         with open('ecu_name_%_out.txt'%(self.server_address,)) as file:
@@ -65,7 +65,7 @@ class client_server_pair:
         self.ecu_name=(my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
         #print(self.ecu_name)
         
-    def check_service_mode9(): # return a list of 32 bools representing support for pids 1-32 on this ECU
+    def check_service_mode9(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
         if not os.path.isfile("pid_indices_%_out.txt"%(self.server_address,)):
             os.system("autopi obd.query test_pid00 mode=09 pid='0' header='%' formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%_out.txt"%(self.server_address,self.server_address))
         with open("pid_indices_%_out.txt"%(self.server_address,)) as file:
