@@ -58,6 +58,7 @@ class client_server_pair:
         else:
             return False
     def check_ecu_name(self): 
+        print("ecu_name_%_out.txt"%(self.server_address,))
         if not os.path.isfile("ecu_name_%_out.txt"%(self.server_address,)):
             os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%_out.txt"%(self.server_address,self.server_address))
         with open('ecu_name_%_out.txt'%(self.server_address,)) as file:
