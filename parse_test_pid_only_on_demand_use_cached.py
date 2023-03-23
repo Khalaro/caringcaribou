@@ -84,7 +84,7 @@ class client_server_pair:
         if not os.path.isfile('pid_indices_out.txt'):
             os.system("obd.query test_pid00 mode=09 pid="'0'" header="'7df'" formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true   >> pid_indices_out.txt")
         with open('pid_indices_out.txt') as file:
-        pid_indices_file_contents = file.read()
+            pid_indices_file_contents = file.read()
         pid_index_binary_string=(my_dict['PID_KEY'].findall(pid_indices_file_contents))[0]
         pid_supported_list = [True,]  #we create index 0 so later indices correlate to pids
         pid_index_binary_string=((my_dict['PID_KEYv2'].findall(pid_indices_file_contents))[0])[2:34]
