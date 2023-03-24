@@ -153,7 +153,7 @@ def main():
         print(CS_pair.client_address+'      '+CS_pair.server_address)
 
     for CS_pair in myarray:        
-        print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
+        #print("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         if not os.path.isfile('services_out_%s_%s.txt'%( CS_pair.client_address, CS_pair.server_address)):
             os.system("python cc.py uds services 0x%s 0x%s > services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address, CS_pair.client_address, CS_pair.server_address) )
         with open("services_out_%s_%s.txt"%(CS_pair.client_address, CS_pair.server_address ) )as file:
@@ -170,10 +170,10 @@ def main():
     service_out_file = open( 'services_out.txt', 'w' )
     for Client_Server_pair in myarray:
         Client_Server_pair.check_ecu_name()
-        print('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address + '  ECU NAME:  ' + Client_Server_pair.ecu_name)
+        print('\n\n\n\n\nClient ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address + '  ECU NAME:  ' + Client_Server_pair.ecu_name)
         service_out_file.write('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address)
         for service_code_pair in Client_Server_pair.services_list:
-            print(service_code_pair.service_code+'  :  '+ service_code_pair.service_name )
+            print(service_code_pair.service_code+'  :  '+ service_code_pair.service_name +'    \n' )
             service_out_file.write(service_code_pair.service_code+'  :  '+ service_code_pair.service_name)
     service_out_file.close()            
 
