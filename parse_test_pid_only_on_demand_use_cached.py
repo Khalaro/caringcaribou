@@ -64,7 +64,7 @@ class client_server_pair:
             os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%s' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%s_out.txt"%(self.server_address,self.server_address))
         with open('ecu_name_%s_out.txt'%(self.server_address,)) as file:
             ecu_name_file_contents = file.read()
-        if (  (my_dict['ECU_NAME_KEY'].match(ecu_name_file_contents)) is not None:
+        if (  (my_dict['ECU_NAME_KEY'].match(ecu_name_file_contents)) is not None):
             self.ecu_name=(my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
             print(self.ecu_name)
         else:
