@@ -58,6 +58,7 @@ class client_server_pair:
         else:
             return False
     def check_ecu_name(self): 
+        print(self.server_address)
         print("ecu_name_%_out.txt"%(self.server_address,))
         if not os.path.isfile("ecu_name_%_out.txt"%(self.server_address,)):
             os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%_out.txt"%(self.server_address,self.server_address))
@@ -135,7 +136,8 @@ def main():
         discovery_file_contents = file.read()
     clients = my_dict['CLIENT'].findall(discovery_file_contents)
     servers = my_dict['SERVER'].findall(discovery_file_contents)
-    myarray = []
+    myarray = []  
+    myarray.append(client_server_pair('7DF', '7EF')) # add the Generic ECU reference
     for index,value in enumerate(clients):    
         CS_pair = client_server_pair(clients[index], servers[index])
         if CS_pair.is_valid_pair(): 
