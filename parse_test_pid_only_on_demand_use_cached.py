@@ -221,8 +221,8 @@ def main():
     service_out_file = open( 'services_out.txt', 'w' )
     for Client_Server_pair in myarray:
         Client_Server_pair.check_ecu_name()
-        Client_Server_pair.check_UDS_DIDS(UDS_DID_list)
-        print('\n\n\n\n\nClient ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address + '  ECU NAME:  ' + Client_Server_pair.ecu_name)
+        Client_Server_pair.check_UDS_DIDS(UDS_DID_list, UDS_DID_description)
+        print('\n\n\n\n\Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address + '  ECU NAME:  ' + Client_Server_pair.ecu_name)
         service_out_file.write('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address)
         for service_code_pair in Client_Server_pair.services_list:
             print(service_code_pair.service_code+'  :  '+ service_code_pair.service_name +'    \n' )
