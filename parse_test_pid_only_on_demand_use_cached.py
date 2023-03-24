@@ -59,17 +59,17 @@ class client_server_pair:
             return False
     def check_ecu_name(self): 
         print(self.server_address)
-        print("ecu_name_%_out.txt"%(self.server_address,))
-        if not os.path.isfile("ecu_name_%_out.txt"%(self.server_address,)):
-            os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%_out.txt"%(self.server_address,self.server_address))
-        with open('ecu_name_%_out.txt'%(self.server_address,)) as file:
+        print(("ecu_name_%s_out.txt"%(self.server_address,)))
+        if not os.path.isfile("ecu_name_%s_out.txt"%(self.server_address,)):
+            os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%s' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%s_out.txt"%(self.server_address,self.server_address))
+        with open('ecu_name_%s_out.txt'%(self.server_address,)) as file:
             ecu_name_file_contents = file.read()
         self.ecu_name=(my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
         #print(self.ecu_name)
         
     def check_service_mode9(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
-        if not os.path.isfile("pid_indices_%_out.txt"%(self.server_address,)):
-            os.system("autopi obd.query test_pid00 mode=09 pid='0' header='%' formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%_out.txt"%(self.server_address,self.server_address))
+        if not os.path.isfile("pid_indices_%s_out.txt"%(self.server_address,)):
+            os.system("autopi obd.query test_pid00 mode=09 pid='0' header='%s' formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%s_out.txt"%(self.server_address,self.server_address))
         with open("pid_indices_%_out.txt"%(self.server_address,)) as file:
             pid_indices_file_contents = file.read()
         pid_supported_list = [True,]  #we create index 0 so later indices correlate to pids
