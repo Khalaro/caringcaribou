@@ -59,17 +59,17 @@ class client_server_pair:
         else:
             return False
         
-    def check_UDS_DIDS(self, UDS_DIDS_LIST ): #UDS DIDS to query
+    def check_UDS_DIDS(self, UDS_DIDS_LIST , UDS_DIDS_DESCRIPTIONS): #UDS DIDS to query
         #print(self.server_address)
         #print(("ecu_name_%s_out.txt"%(self.server_address,)))
-        for standard_did in UDS_DIDS_LIST:
+        for index,standard_did in UDS_DIDS_LIST:
             if not os.path.isfile("UDS_DID_out_%s_DID_%s.txt"%(self.server_address, standard_did)):
                 os.system("autopi obd.query UDS_DID_QUERY header="'%s'" mode="'22'" pid="'%s'" force=True protocol=6 formula='messages[0].data' >> UDS_DID_out_%s_DID_%s.txt"%(self.server_address, standard_did, self.server_address, standard_did))
             with open('UDS_DID_out_%s_DID_%s.txt'%(self.server_address,standard_did)) as file:
                 ecu_name_file_contents = file.read()
             if (  (my_dict['GENERIC_VALUE_KEY'].match(ecu_name_file_contents)) is not None):
                 self.UDS_DID_response[standard_did] = (my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
-                print( 'ECU :'+self.server_address+'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did])
+                print( 'ECU :'+self.server_address+'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
             else:
                 self.UDS_DID_response[standard_did] = "Not Available"
             
@@ -155,7 +155,37 @@ class client_server_pair:
 def main():
     
     UDS_DID_list =['F180', 'F181', 'F182', 'F183', 'F184', 'F185', 'F186', 'F187', 'F188', 'F189', 'F18A', 'F18B', 'F18C', 'F18D', 'F18E', 'F190', 'F191', 'F192', 'F193', 'F194', 'F195', 'F196', 'F197', 'F198', 'F199', 'F19A', 'F19B', 'F19C', 'F19D', 'F19E', 'F19F']
-    #UDS_DID_description =[]
+    UDS_DID_description =['bootSoftwareIdentificationDataIdentifier',
+                        'applicationSoftwareIdentificationDataIdentifier',
+                        'applicationDataIdentificationDataIdentifier',
+                        'bootSoftwareIdentificationDataIdentifier',
+                        'applicationSoftwareFingerprintDataIdentifier',
+                        'applicationDataFingerprintDataIdentifier',
+                        'activeDiagnosticSessionDataIdentifier',
+                        'vehicleManufacturerSparePartNumberDataIdentifier',
+                        'vehicleManufacturerECUSoftwareNumberDataIdentifier',
+                        'vehicleManufacturerECUSoftwareVersionNumberDataIdentifier',
+                        'systemSupplierIdentifierDataIdentifier',
+                        'ECUManufacturingDateDataIdentifier',
+                        'ECUSerialNumberDataIdentifier',
+                        'supportedFunctionalUnitsDataIdentifier',
+                        'vehicleManufacturerKitAssemblyPartNumberDataIdentifier',
+                        'VINDataIdentifier',
+                        'vehicleManufacturerECUHardwareNumberDataIdentifier',
+                        'systemSupplierECUHardwareNumberDataIdentifier',
+                        'systemSupplierECUHardwareVersionNumberDataIdentifier',
+                        'systemSupplierECUSoftwareNumberDataIdentifier',
+                        'systemSupplierECUSoftwareVersionNumberDataIdentifier',
+                        'exhaustRegulationOrTypeApprovalNumberDataIdentifier',
+                        'systemNameOrEngineTypeDataIdentifier',
+                        'repairShopCodeOrTesterSerialNumberDataIdentifier',
+                        'programmingDateDataIdentifier',
+                        'calibrationRepairShopCodeOrCalibrationEquipmentSerialNumberDataIdentifier',
+                        'calibrationDateDataIdentifier',
+                        'calibrationEquipmentSoftwareNumberDataIdentifier',
+                        'ECUInstallationDateDataIdentifier',
+                        'ODXFileDataIdentifier',
+                        'entityDataIdentifier']
     if not os.path.isfile('discovery_output.txt'):
         os.system("python cc.py uds discovery -min 0x700 -max 0x800 >  discovery_output.txt")
     with open('discovery_output.txt') as file:
