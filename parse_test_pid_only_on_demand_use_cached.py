@@ -63,16 +63,16 @@ class client_server_pair:
         #print(self.server_address)
         #print(("ecu_name_%s_out.txt"%(self.server_address,)))
         for index,standard_did in enumerate(UDS_DIDS_LIST):
-            if not os.path.isfile("UDS_DID_out_%s_DID_%s.txt"%(self.client_address , standard_did)):
-                os.system("autopi obd.query UDS_DID_QUERY header="'%s'" mode="'22'" pid="'%s'" force=True protocol=6 formula='messages[0].data' >> UDS_DID_out_%s_DID_%s.txt"%(self.client_address , standard_did, self.client_address , standard_did))
-            with open('UDS_DID_out_%s_DID_%s.txt'%(self.client_address ,standard_did)) as file:
+            if not os.path.isfile("UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did)):
+                os.system("autopi obd.query UDS_DID_QUERY header="'%s'" mode="'22'" pid="'%s'" force=True protocol=6 formula='messages[0].data' >> UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did, self.server_address , standard_did))
+            with open('UDS_DID_out_%s_DID_%s.txt'%(self.server_address ,standard_did)) as file:
                 uds_did_file_contents = file.read()
             if (  (my_dict['GENERIC_VALUE_KEY'].match(uds_did_file_contents)) is not None):
                 self.UDS_DID_response[standard_did] = (my_dict['ECU_NAME_KEY'].findall(uds_did_file_contents))[0]
-                print( 'ECU :'+self.client_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
+                print( 'ECU :'+self.server_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
             else:
                 self.UDS_DID_response[standard_did] = "Not Available"
-                print( 'ECU :'+self.client_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
+                print( 'ECU :'+self.server_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
             
             
     def check_ecu_name(self): 
@@ -194,7 +194,7 @@ def main():
     clients = my_dict['CLIENT'].findall(discovery_file_contents)
     servers = my_dict['SERVER'].findall(discovery_file_contents)
     myarray = []  
-    myarray.append(client_server_pair('7DF', '7EF')) # add the Generic ECU reference
+    myarray.append(client_server_pair('7D7', '7DF')) # add the Generic ECU reference
     for index,value in enumerate(clients):    
         CS_pair = client_server_pair(clients[index], servers[index])
         if CS_pair.is_valid_pair(): 
