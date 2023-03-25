@@ -16,7 +16,7 @@ my_dict = {
     'PID_KEY': re.compile(r'\bvalue: 7e8[0-9A-Fa-f]{2}([0-9A-Fa-f]+)\b ?'),
     'PID_KEYv2': re.compile(r'\b0b[0-1]+\b ?'),
     'ECU_NAME_KEY': re.compile(r'\bvalue: "(?P<ECU_NAME>.+)"'),
-    'GENERIC_VALUE_KEY': re.compile(r'\bvalue: "(?P<ECU_NAME>.+)"'),
+    'GENERIC_VALUE_KEY': re.compile(r'\bvalue: "(?P<GENERIC_VALUE_KEY>.+)"'),
     'KEY': re.compile(r'.'),
 }
 
