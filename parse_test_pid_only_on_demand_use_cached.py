@@ -68,7 +68,7 @@ class client_server_pair:
             with open('UDS_DID_out_%s_DID_%s.txt'%(self.server_address ,standard_did)) as file:
                 uds_did_file_contents = file.read()
             if (  (my_dict['GENERIC_VALUE_KEY'].search(uds_did_file_contents)) is not None):
-                self.UDS_DID_response[standard_did] = (my_dict['GENERIC_VALUE_KEY'].findall(uds_did_file_contents))[0]
+                self.UDS_DID_response[standard_did] = (my_dict['GENERIC_VALUE_KEY'].findall(uds_did_file_contents))[0][1:]
                 print( 'ECU :'+self.server_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
             else:
                 self.UDS_DID_response[standard_did] = "Not Available"
