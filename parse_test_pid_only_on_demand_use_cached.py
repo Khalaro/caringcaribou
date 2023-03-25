@@ -148,7 +148,7 @@ class client_server_pair:
     ecu_name = None
     services_list = [] # class service_code_name_pair
     pid_list =[] # class pid_value_pair
-    UDS_DID_response =[] # map [string UDS_DUD] 
+    UDS_DID_response = {} # map [string UDS_DUD] 
     
 
 
