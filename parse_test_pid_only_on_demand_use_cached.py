@@ -73,8 +73,8 @@ class client_server_pair:
                 #    continue
                 #else:
                 #    print "os.system ERROR"
-                print(command)
                 command=('autopi cmd.run "autopi obd.query UDS_DID_QUERY header=%s mode=22 pid=%s force=True protocol=6 %s >> %s" '%(self.server_address , standard_did, formula, UDS_DID_out_filename))
+                print(command)
                 os.system(command)
             with open('UDS_DID_out_%s_DID_%s.txt'%(self.server_address ,standard_did)) as file:
                 uds_did_file_contents = file.read()
