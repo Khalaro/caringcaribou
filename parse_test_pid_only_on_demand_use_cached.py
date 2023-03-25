@@ -67,8 +67,8 @@ class client_server_pair:
                 os.system("autopi obd.query UDS_DID_QUERY header="'%s'" mode="'22'" pid="'%s'" force=True protocol=6 formula='messages[0].data' >> UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did, self.server_address , standard_did))
             with open('UDS_DID_out_%s_DID_%s.txt'%(self.server_address ,standard_did)) as file:
                 uds_did_file_contents = file.read()
-            if (  (my_dict['GENERIC_VALUE_KEY'].match(uds_did_file_contents)) is not None):
-                self.UDS_DID_response[standard_did] = (my_dict['ECU_NAME_KEY'].findall(uds_did_file_contents))[0]
+            if (  (my_dict['GENERIC_VALUE_KEY'].matchall(uds_did_file_contents)) is not None):
+                self.UDS_DID_response[standard_did] = (my_dict['GENERIC_VALUE_KEY'].findall(uds_did_file_contents))[0]
                 print( 'ECU :'+self.server_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
             else:
                 self.UDS_DID_response[standard_did] = "Not Available"
@@ -82,7 +82,7 @@ class client_server_pair:
             os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%s' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%s_out.txt"%(self.server_address,self.server_address))
         with open('ecu_name_%s_out.txt'%(self.server_address,)) as file:
             ecu_name_file_contents = file.read()
-        if (  (my_dict['ECU_NAME_KEY'].match(ecu_name_file_contents)) is not None):
+        if (  (my_dict['ECU_NAME_KEY'].matchall(ecu_name_file_contents)) is not None):
             self.ecu_name=(my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
             print(self.ecu_name)
         else:
