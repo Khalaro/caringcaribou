@@ -65,7 +65,7 @@ class client_server_pair:
         for index,standard_did in enumerate(UDS_DIDS_LIST):
             if not os.path.isfile("UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did)):
                 #os.system("autopi obd.query UDS_DID_QUERY header="'%s'" mode="'22'" pid="'%s'" force=True protocol=6 formula='messages[0].data' >> UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did, self.server_address , standard_did))
-                os.system('autopi obd.query UDS_DID_QUERY header=%s mode=22 pid=%s force=True protocol=6 formula="messages[0].data[0:]" >> UDS_DID_out_%s_DID_%s.txt'%(self.server_address , standard_did, self.server_address , standard_did))
+                os.system("autopi obd.query UDS_DID_QUERY header='%s' mode=22 pid='%s' force=True protocol=6 formula='messages[0].data[0:]' >> UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did, self.server_address , standard_did))
             with open('UDS_DID_out_%s_DID_%s.txt'%(self.server_address ,standard_did)) as file:
                 uds_did_file_contents = file.read()
             if (  (my_dict['GENERIC_VALUE_KEY'].search(uds_did_file_contents)) is not None):
