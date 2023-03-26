@@ -162,8 +162,54 @@ class client_server_pair:
     UDS_DID_response = {} # map [string UDS_DUD] 
     
 
+def uds_dids_only():
+    UDS_DID_list =['F180', 'F181', 'F182', 'F183', 'F184', 'F185', 'F186', 'F187', 'F188', 'F189', 'F18A', 'F18B', 'F18C', 'F18D', 'F18E', 'F190', 'F191', 'F192', 'F193', 'F194', 'F195', 'F196', 'F197', 'F198', 'F199', 'F19A', 'F19B', 'F19C', 'F19D', 'F19E', 'F19F']
+    UDS_DID_description =['bootSoftwareIdentificationDataIdentifier',
+                        'applicationSoftwareIdentificationDataIdentifier',
+                        'applicationDataIdentificationDataIdentifier',
+                        'bootSoftwareIdentificationDataIdentifier',
+                        'applicationSoftwareFingerprintDataIdentifier',
+                        'applicationDataFingerprintDataIdentifier',
+                        'activeDiagnosticSessionDataIdentifier',
+                        'vehicleManufacturerSparePartNumberDataIdentifier',
+                        'vehicleManufacturerECUSoftwareNumberDataIdentifier',
+                        'vehicleManufacturerECUSoftwareVersionNumberDataIdentifier',
+                        'systemSupplierIdentifierDataIdentifier',
+                        'ECUManufacturingDateDataIdentifier',
+                        'ECUSerialNumberDataIdentifier',
+                        'supportedFunctionalUnitsDataIdentifier',
+                        'vehicleManufacturerKitAssemblyPartNumberDataIdentifier',
+                        'VINDataIdentifier',
+                        'vehicleManufacturerECUHardwareNumberDataIdentifier',
+                        'systemSupplierECUHardwareNumberDataIdentifier',
+                        'systemSupplierECUHardwareVersionNumberDataIdentifier',
+                        'systemSupplierECUSoftwareNumberDataIdentifier',
+                        'systemSupplierECUSoftwareVersionNumberDataIdentifier',
+                        'exhaustRegulationOrTypeApprovalNumberDataIdentifier',
+                        'systemNameOrEngineTypeDataIdentifier',
+                        'repairShopCodeOrTesterSerialNumberDataIdentifier',
+                        'programmingDateDataIdentifier',
+                        'calibrationRepairShopCodeOrCalibrationEquipmentSerialNumberDataIdentifier',
+                        'calibrationDateDataIdentifier',
+                        'calibrationEquipmentSoftwareNumberDataIdentifier',
+                        'ECUInstallationDateDataIdentifier',
+                        'ODXFileDataIdentifier',
+                        'entityDataIdentifier']
+    myarray = []  
+    myarray.append(client_server_pair('7DF', '7DF')) # add the Generic ECU reference
 
-def main():
+    service_out_file = open( 'services_out.txt', 'w' )
+    for Client_Server_pair in myarray:
+        Client_Server_pair.check_ecu_name()
+        Client_Server_pair.check_UDS_DIDS(UDS_DID_list, UDS_DID_description)
+        print('\n\n\n\n\Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address + '  ECU NAME:  ' + Client_Server_pair.ecu_name)
+        service_out_file.write('Client ID :  '+Client_Server_pair.client_address+'     Server ID :  '+ Client_Server_pair.server_address)
+        for service_code_pair in Client_Server_pair.services_list:
+            print(service_code_pair.service_code+'  :  '+ service_code_pair.service_name +'    \n' )
+            service_out_file.write(service_code_pair.service_code+'  :  '+ service_code_pair.service_name)
+    service_out_file.close()            
+
+def fulltest():
     
     UDS_DID_list =['F180', 'F181', 'F182', 'F183', 'F184', 'F185', 'F186', 'F187', 'F188', 'F189', 'F18A', 'F18B', 'F18C', 'F18D', 'F18E', 'F190', 'F191', 'F192', 'F193', 'F194', 'F195', 'F196', 'F197', 'F198', 'F199', 'F19A', 'F19B', 'F19C', 'F19D', 'F19E', 'F19F']
     UDS_DID_description =['bootSoftwareIdentificationDataIdentifier',
@@ -241,4 +287,12 @@ def main():
     service_out_file.close()            
 
 
+
+def main():
+    if True:
+        uds_dids_only()
+    #else:    
+    #    fulltest()
+        
+        
 main()
