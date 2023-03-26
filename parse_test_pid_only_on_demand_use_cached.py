@@ -63,35 +63,35 @@ class client_server_pair:
         #print(self.server_address)
         #print(("ecu_name_%s_out.txt"%(self.server_address,)))
         for index,standard_did in enumerate(UDS_DIDS_LIST):
-            if not os.path.isfile("UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did)):
+            if not os.path.isfile("UDS_DID_out_%s_DID_%s.txt"%(self.client_address , standard_did)):
                 #os.system("autopi obd.query UDS_DID_QUERY header="'%s'" mode="'22'" pid="'%s'" force=True protocol=6 formula='messages[0].data' >> UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did, self.server_address , standard_did))
-                UDS_DID_out_filename="UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did)
+                UDS_DID_out_filename="UDS_DID_out_%s_DID_%s.txt"%(self.client_address , standard_did)
                 formula="""'messages[0].data[0:]'"""
-                #command=("autopi cmd.run 'autopi obd.query UDS_DID_QUERY header=%s mode=22 pid=%s force=True protocol=6 %s >> %s' "%(self.server_address , standard_did, formula, UDS_DID_out_filename))
+                #command=("autopi cmd.run 'autopi obd.query UDS_DID_QUERY header=%s mode=22 pid=%s force=True protocol=6 %s >> %s' "%(self.client_address , standard_did, formula, UDS_DID_out_filename))
                 #if os.system(command) == 0:
                 #    # Check for failure and wait
                 #    continue
                 #else:
                 #    print "os.system ERROR"
-                command=("autopi cmd.run 'autopi obd.query UDS_DID_QUERY header=%s mode=22 pid=%s force=True protocol=6 formula=%s ' >> %s " %(self.server_address , standard_did, formula, UDS_DID_out_filename))
+                command=("autopi cmd.run 'autopi obd.query UDS_DID_QUERY header=%s mode=22 pid=%s force=True protocol=6 formula=%s ' >> %s " %(self.client_address , standard_did, formula, UDS_DID_out_filename))
                 print(command)
                 os.system(command)
-            with open('UDS_DID_out_%s_DID_%s.txt'%(self.server_address ,standard_did)) as file:
+            with open('UDS_DID_out_%s_DID_%s.txt'%(self.client_address ,standard_did)) as file:
                 uds_did_file_contents = file.read()
             if (  (my_dict['GENERIC_VALUE_KEY'].search(uds_did_file_contents)) is not None):
                 self.UDS_DID_response[standard_did] = (my_dict['GENERIC_VALUE_KEY'].findall(uds_did_file_contents))[0][1:]
-                print( 'ECU :'+self.server_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
+                print( 'ECU :'+self.client_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
             else:
                 self.UDS_DID_response[standard_did] = "Not Available"
-                print( 'ECU :'+self.server_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
+                print( 'ECU :'+self.client_address +'   DID:'+standard_did+'  Value: '+self.UDS_DID_response[standard_did]+'    Description: '+UDS_DIDS_DESCRIPTIONS[index])
             
             
     def check_ecu_name(self): 
-        #print(self.server_address)
-        #print(("ecu_name_%s_out.txt"%(self.server_address,)))
-        if not os.path.isfile("ecu_name_%s_out.txt"%(self.server_address,)):
-            os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%s' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%s_out.txt"%(self.server_address,self.server_address))
-        with open('ecu_name_%s_out.txt'%(self.server_address,)) as file:
+        #print(self.client_address)
+        #print(("ecu_name_%s_out.txt"%(self.client_address,)))
+        if not os.path.isfile("ecu_name_%s_out.txt"%(self.client_address,)):
+            os.system("autopi obd.query test_pid00 mode=09 pid='0A' header='%s' formula='messages[0].data[3:]' protocol=6 force=true >> ecu_name_%s_out.txt"%(self.client_address,self.client_address))
+        with open('ecu_name_%s_out.txt'%(self.client_address,)) as file:
             ecu_name_file_contents = file.read()
         if (  (my_dict['ECU_NAME_KEY'].search(ecu_name_file_contents)) is not None):
             self.ecu_name=(my_dict['ECU_NAME_KEY'].findall(ecu_name_file_contents))[0]
@@ -99,11 +99,11 @@ class client_server_pair:
             self.ecu_name = "Not Available"
         
     def check_service_mode9(self): # return a list of 32 bools representing support for pids 1-32 on this ECU
-        if not os.path.isfile("pid_indices_%s_out.txt"%(self.server_address,)):
-            print("autopi obd.query test_pid00 mode=09 pid=0 header=%s formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%s_out.txt"%(self.server_address,self.server_address))
-            #print("autopi obd.query test_pid00 mode=09 pid=0 header=%s formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%s_out.txt"%(self.server_address,self.server_address))
-            os.system("autopi obd.query test_pid00 mode=09 pid=0 header=%s formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%s_out.txt"%(self.server_address,self.server_address))
-        with open("pid_indices_%_out.txt"%(self.server_address,)) as file:
+        if not os.path.isfile("pid_indices_%s_out.txt"%(self.client_address,)):
+            print("autopi obd.query test_pid00 mode=09 pid=0 header=%s formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%s_out.txt"%(self.client_address,self.client_address))
+            #print("autopi obd.query test_pid00 mode=09 pid=0 header=%s formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%s_out.txt"%(self.client_address,self.client_address))
+            os.system("autopi obd.query test_pid00 mode=09 pid=0 header=%s formula='bin(bytes_to_int(messages[0].data))' protocol=6 force=true >> pid_indices_%s_out.txt"%(self.client_address,self.client_address))
+        with open("pid_indices_%_out.txt"%(self.client_address,)) as file:
             pid_indices_file_contents = file.read()
         pid_supported_list = [True,]  #we create index 0 so later indices correlate to pids
         pid_index_binary_string=((my_dict['PID_KEYv2'].findall(pid_indices_file_contents))[0])[17:49]
@@ -204,7 +204,7 @@ def main():
     clients = my_dict['CLIENT'].findall(discovery_file_contents)
     servers = my_dict['SERVER'].findall(discovery_file_contents)
     myarray = []  
-    myarray.append(client_server_pair('7D7', '7DF')) # add the Generic ECU reference
+    myarray.append(client_server_pair('7DF', '7DF')) # add the Generic ECU reference
     for index,value in enumerate(clients):    
         CS_pair = client_server_pair(clients[index], servers[index])
         if CS_pair.is_valid_pair(): 
