@@ -289,10 +289,10 @@ def fulltest():
 
 
 def main():
-    if True:
+    if False:
         uds_dids_only()
-    #else:    
-    #    fulltest()
+    else:    
+        fulltest()
         
         
 main()
