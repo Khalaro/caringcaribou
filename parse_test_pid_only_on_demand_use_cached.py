@@ -66,7 +66,7 @@ class client_server_pair:
             if not os.path.isfile("UDS_DID_out_%s_DID_%s.txt"%(self.client_address , standard_did)):
                 #os.system("autopi obd.query UDS_DID_QUERY header="'%s'" mode="'22'" pid="'%s'" force=True protocol=6 formula='messages[0].data' >> UDS_DID_out_%s_DID_%s.txt"%(self.server_address , standard_did, self.server_address , standard_did))
                 UDS_DID_out_filename="UDS_DID_out_%s_DID_%s.txt"%(self.client_address , standard_did)
-                formula="""'messages[0].data[0:]'"""
+                formula="""'messages[0].data[3:]'"""
                 #command=("autopi cmd.run 'autopi obd.query UDS_DID_QUERY header=%s mode=22 pid=%s force=True protocol=6 %s >> %s' "%(self.client_address , standard_did, formula, UDS_DID_out_filename))
                 #if os.system(command) == 0:
                 #    # Check for failure and wait
