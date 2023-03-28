@@ -155,7 +155,7 @@ def main():
         'vin_7e0_UDS_2',     
         'vin_18DB33F1_UDS_2',
         'vin_18DB33F1_UDS_5']
-    get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas)
+    found_vin, found_protocol = get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas)
 
         
 main()
