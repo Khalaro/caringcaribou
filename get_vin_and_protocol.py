@@ -15,7 +15,10 @@ my_dict = {
 
 def validate_vin(vinsample): #string
     # We should check the string for special characters before attempting to send to nshta
-    return False
+    if len(vinsample)==17:
+        return True
+    else:
+        return False
 
      
     
