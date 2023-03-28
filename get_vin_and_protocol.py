@@ -19,8 +19,8 @@ def validate_vin(vinsample): #string
      
     
 def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
-    output_filename= VIN_CODE_LIST[index] #"vin_output.txt"
     for index,vin_code_slug in enumerate(VIN_CODE_LIST):
+        output_filename= VIN_CODE_LIST[index] #"vin_output.txt"
         #if os.path.isfile( output_filename):
         #    os.system("rm  output_filename")
         if not os.path.isfile( output_filename):
