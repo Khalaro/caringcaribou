@@ -8,7 +8,8 @@ import subprocess
 
 my_dict = {
     'Other_VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'), 
-    'VIN_VALUE': re.compile(r'value: (?P<VIN_VALUE>[A-Za-z0-9]+)'),
+    #'VIN_VALUE': re.compile(r'value: (?P<VIN_VALUE>[A-Za-z0-9]+)'),
+    'VIN_VALUE': re.compile(r'\bvalue: (?P<VIN_VALUE>[A-Za-z0-9]+)'),
     'KEY': re.compile(r'.'),
 }
 
@@ -34,7 +35,7 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
         with open(output_filename) as file:
             file_contents = file.read()
         if (  (my_dict['VIN_VALUE'].search(file_contents)) is not None):
-            output_vin = (my_dict['VIN_VALUE'].findall(file_contents))[0][1:]
+            output_vin = (my_dict['VIN_VALUE'].findall(file_contents))[0][0:]
             if validate_vin(output_vin):
                 print( output_vin +"  Protocol: "+protocols[index]+"     Vincodelist: "+VIN_CODE_LIST[index])
                 #if os.path.isfile( output_filename):
