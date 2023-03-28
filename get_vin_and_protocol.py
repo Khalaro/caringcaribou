@@ -32,13 +32,16 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
         if (  (my_dict['VIN_VALUE'].search(file_contents)) is not None):
             output_vin = (my_dict['VIN_VALUE'].findall(file_contents))[0][1:]
             if validate_vin(output_vin):
-                os.system("rm  vin_output.txt")
                 print( output_vin +"  Protocol: "+protocols[index]+"     Vincodelist: "+VIN_CODE_LIST[index])
+                if os.path.isfile( output_filename):
+                    os.system("rm  vin_output.txt")
                 return {output_vin, protocols[index]}
             else:
-                os.system("rm  vin_output.txt")
+                if os.path.isfile( output_filename):
+                    os.system("rm  vin_output.txt")
         else:
-            os.system("rm  vin_output.txt")
+            if os.path.isfile( output_filename):
+                os.system("rm  vin_output.txt")
 
 
 def main():    
