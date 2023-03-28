@@ -8,7 +8,7 @@ import subprocess
 
 my_dict = {
     'Other_VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'), 
-    'VIN_VALUE': re.compile(r'\bvalue: "(?P<GENERIC_VALUE_KEY>[0-9A-Fa-f]+)"'),
+    'VIN_VALUE': re.compile(r'\bvalue: (?P<GENERIC_VALUE_KEY>[0-9A-Fa-f]+)'),
     'KEY': re.compile(r'.'),
 }
 
