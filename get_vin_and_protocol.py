@@ -7,15 +7,7 @@ import subprocess
 
 
 my_dict = {
-    'CLIENT': re.compile(r'\b0x(?P<CLIENT>[0-9A-Fa-f]+)\b \| 0x[0-9A-Fa-f]+\b \|'),
-    'SERVER': re.compile(r'\b0x[0-9A-Fa-f]+\b \| 0x(?P<SERVER>[0-9A-Fa-f]+)\b \|'),
-    'SERVICE_NAME': re.compile(r'Supported service 0x[0-9A-Fa-f]+: (?P<SERVICE_NAME>[^\\\n]+) ?'),
-    'SERVICE_CODE': re.compile(r'Supported service (?P<SERVICE_CODE>0x[0-9A-Fa-f]+): [^\\\n]+ ?'),
-    'PID': re.compile(r'0x(?P<PID>[0-9A-Fa-f]+) [0-9A-Fa-f]+?'),
-    'VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'), 
-    'PID_KEY': re.compile(r'\bvalue: 7e8[0-9A-Fa-f]{2}([0-9A-Fa-f]+)\b ?'),
-    'PID_KEYv2': re.compile(r'\b0b[0-1]+\b ?'),
-    'ECU_NAME_KEY': re.compile(r'\bvalue: "(?P<ECU_NAME>.+)"'),
+    'VIN_VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'), 
     'GENERIC_VALUE_KEY': re.compile(r'\bvalue: "(?P<GENERIC_VALUE_KEY>.+)"'),
     'KEY': re.compile(r'.'),
 }
@@ -37,8 +29,8 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
             os.system(command)
         with open(output_filename) as file:
             file_contents = file.read()
-        if (  (my_dict['GENERIC_VALUE_KEY'].search(file_contents)) is not None):
-            output_vin = (my_dict['GENERIC_VALUE_KEY'].findall(file_contents))[0][1:]
+        if (  (my_dict['VIN_VALUE'].search(file_contents)) is not None):
+            output_vin = (my_dict['VIN_VALUE'].findall(file_contents))[0][1:]
             if validate_vin(output_vin):
                 os.system("rm  vin_output.txt")
                 print( output_vin +"  Protocol: "+protocols[index]+"     Vincodelist: "+VIN_CODE_LIST[index])
