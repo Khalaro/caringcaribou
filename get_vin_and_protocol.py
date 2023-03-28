@@ -7,8 +7,8 @@ import subprocess
 
 
 my_dict = {
-    'VIN_VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'), 
-    'GENERIC_VALUE_KEY': re.compile(r'\bvalue: "(?P<GENERIC_VALUE_KEY>.+)"'),
+    'Other_VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'), 
+    'VIN_VALUE': re.compile(r'\bvalue: "(?P<GENERIC_VALUE_KEY>[0-9A-Fa-f]+)"'),
     'KEY': re.compile(r'.'),
 }
 
@@ -19,10 +19,10 @@ def validate_vin(vinsample): #string
      
     
 def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
-    output_filename= "vin_output.txt"
+    output_filename= VIN_CODE_LIST [index] "vin_output.txt"
     for index,vin_code_slug in enumerate(VIN_CODE_LIST):
-        #if not os.path.isfile( "vin_output.txt"):
-        #    os.system("rm  vin_output.txt")
+        #if os.path.isfile( output_filename):
+        #    os.system("rm  output_filename")
         if not os.path.isfile( output_filename):
             command=("autopi cmd.run 'autopi obd.query VIN_READ header=%s mode=%s pid=%s force=True protocol=%s formula=%s ' >> %s " %( headers[index], modes[index], pids[index], protocols[index], formulas[index], output_filename  ))
             print(command)
