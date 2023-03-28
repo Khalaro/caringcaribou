@@ -39,9 +39,9 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
      #       else:
      #           if os.path.isfile( output_filename):
      #               os.system("rm  "+output_filename)
-        else:
-            if os.path.isfile( output_filename):
-                return "NOT FOUND","NOT FOUND"
+     #  else:
+     #      if os.path.isfile( output_filename):
+    return "NOT FOUND","NOT FOUND"
                 #os.system("rm  "+output_filename)
 
 
