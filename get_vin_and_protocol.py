@@ -8,9 +8,10 @@ import subprocess
 
 my_dict = {
     'Other_VALUE': re.compile(r'0x[0-9A-Fa-f]+ (?P<VALUE>[0-9A-Fa-f]+)?'), 
-    'VIN_VALUE': re.compile(r'\bvalue: (?P<GENERIC_VALUE_KEY>[0-9A-Za-z]+)'),
+    'VIN_VALUE': re.compile(r'\bvalue: (?P<VIN_VALUE>[A-Za-z0-9]+)'),
     'KEY': re.compile(r'.'),
 }
+
 
 def validate_vin(vinsample): #string
     # We should check the string for special characters before attempting to send to nshta
