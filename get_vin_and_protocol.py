@@ -45,6 +45,8 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
                 return {output_vin, protocols[index]}
             else:
                 os.system("rm  vin_output.txt")
+        else:
+            os.system("rm  vin_output.txt")
 
 
 def main():    
