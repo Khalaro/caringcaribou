@@ -61,12 +61,12 @@ def main():
     message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
     while True:
-    message = can_bus.recv()
-    if message.arbitration_id == 0x215:
-        print(message)
-    current_time = datetime.datetime.now()
-    if (current_time - start_time).total_seconds() >= 10:
-        break
+        message = can_bus.recv()
+        if message.arbitration_id == 0x215:
+            print(message)
+        current_time = datetime.datetime.now()
+        if (current_time - start_time).total_seconds() >= 10:
+            break
     
         
 main()
