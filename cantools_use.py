@@ -71,7 +71,7 @@ def main():
         if message.arbitration_id == 0x731:
             citreon_vin[15:]= message.data
         print(citreon_vin)
-        print(citreon_vin.decode("ASCII"))
+        print(bytes(citreon_vin).decode("ASCII"))
         current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
             break
