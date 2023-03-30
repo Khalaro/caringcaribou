@@ -58,13 +58,17 @@ def main():
     #message = can.Message(arbitration_id=example_message.frame_id, data=data)
     #can_bus.send(message)
     #canddd=444
+    citreon_vin="0000000000000000000000000"
     start_time = datetime.datetime.now()
     message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
     while True:
         message = can_bus.recv()
         if message.arbitration_id == 0x215:
-            print(message.data)
+            citreon_vin[0:]= message.data
+        if message.arbitration_id == 0x073:
+            citreon_vin[7:]= message.data
+        print(citreon_vin)
         current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
             break
