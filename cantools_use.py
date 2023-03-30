@@ -58,6 +58,7 @@ def main():
     #message = can.Message(arbitration_id=example_message.frame_id, data=data)
     #can_bus.send(message)
     #canddd=444
+    start_time = datetime.datetime.now()
     message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
     while True:
