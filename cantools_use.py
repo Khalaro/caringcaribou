@@ -2,6 +2,7 @@
 import re
 #import pandas as pd
 import os
+import datetime
 import subprocess
 import can
 
@@ -52,122 +53,20 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
 
 
 def main():    
-    formulas= ["""'messages[0].data[3:20]'""",
-        """'messages[0].data[3:20]'""",
-        """'messages[0].data[3:20]'""",
-        #"""'int(messages[0].data[4:],16)/10'""",
-        #"""'int(messages[0].data[4:],16)/10'""",
-        #"""'int(messages[0].data[4:],16)/10'""",
-        """'messages[0].data[3:20]'""",
-        """'messages[0].data[3:20]'""",
-        """'messages[0].data[4:21]'""",
-        """'messages[0].data[4:21]'""",
-        """'messages[0].data[3:20]'""",
-        """'messages[0].data[4:21]'""",
-        """'messages[0].data[2:19]'""",
-        """'messages[0].data[2:19]'""",
-        """'messages[0].data[5:22]'""",
-        """'messages[0].data[5:22]'""",
-        """'messages[0].data[2:19]'""",
-        """'messages[0].data[5:22]'"""]
-
-    protocols=['6',			  
-        '6',		  
-        '7',		  
-        #'6',		  
-        #'6',		  
-        #'7',		  
-        '6',		  
-        '6',		  
-        '6',		  
-        '6',		  
-        '7',		  
-        '7',		  
-        '6',		  
-        '6',		  
-        '6',		  
-        '6',		  
-        '7',		  
-        '7']
-
-    headers=['7DF',			  
-        '7e0',		  
-        '18DB33F1',		  
-        #'7DF',		  
-        #'7DF',		  
-        #'18DB33F1',		  
-        '7df',		  
-        '7e0',		  
-        '7df',		  
-        '7e0',		  
-        '18DB33F1',		  
-        '18DB33F1',		  
-        '7df',		  
-        '7e0',		  
-        '7df',		  
-        '7e0',		  
-        '18DB33F1',		  
-        '18DB33F1']
-
-    pids=['02',  
-        '02',  
-        '02',  
-       #'A6',  
-       #'A6',  
-       #'A6',  
-        'F190',
-        'F190',
-        'F190',
-        'F190',
-        'F190',
-        'F190',
-        'F190',
-        'F190',
-        'F190',
-        'F190',
-        'F190',
-        'F190']
-
-    modes=['09',
-        '09',
-        '09',
-        #'01',
-        #'01',
-        #'01',
-        '22', 
-        '22', 
-        '22', 
-        '22', 
-        '22', 
-        '22', 
-        '22', 
-        '22', 
-        '22', 
-        '22', 
-        '22', 
-        '22'] 
-
-    VIN_CODE_LIST= ['vin_7DF_09_02',     
-        'vin_7e0_09_02',     
-        'vin_18DB33F1_09_02',
-        #'vin_7DF_A6',        
-        #'vin_7e0_A6',        
-        #'vin_18DB33F1_A6',   
-        'vin_7DF_UDS_3',     
-        'vin_7e0_UDS_3',     
-        'vin_7DF_UDS_4',     
-        'vin_7e0_UDS_4',     
-        'vin_18DB33F1_UDS_3',
-        'vin_18DB33F1_UDS_4',
-        'vin_7DF_UDS_2',     
-        'vin_7e0_UDS_2',     
-        'vin_7DF_UDS_5',     
-        'vin_7e0_UDS_2',     
-        'vin_18DB33F1_UDS_2',
-        'vin_18DB33F1_UDS_5']
-    found_vin, found_protocol = get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas)
-    print(found_vin)
-    print(found_protocol)
-
+    can_bus = can.interface.Bus('can0', bustype='socketcan')
+    #data = example_message.encode({'Temperature': 250.1, 'AverageRadius': 3.2, 'Enable': 1})
+    #message = can.Message(arbitration_id=example_message.frame_id, data=data)
+    #can_bus.send(message)
+    #canddd=444
+    message = can_bus.recv()
+    #db.decode_message(message.arbitration_id, message.data)
+    while True:
+    message = can_bus.recv()
+    if message.arbitration_id == 0x215:
+        print(message)
+    current_time = datetime.datetime.now()
+    if (current_time - start_time).total_seconds() >= 10:
+        break
+    
         
 main()
