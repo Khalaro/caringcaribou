@@ -64,7 +64,7 @@ def main():
     while True:
         message = can_bus.recv()
         if message.arbitration_id == 0x215:
-            print(message)
+            print(message.data)
         current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
             break
