@@ -5,6 +5,7 @@ import os
 import datetime
 import subprocess
 import can
+from can import Message
 
 
 
@@ -58,30 +59,25 @@ def main():
     #message = can.Message(arbitration_id=example_message.frame_id, data=data)
     #can_bus.send(message)
     #canddd=444
-    citreon_vin_P1=[]
-    citreon_vin_P2=[]
-    citreon_vin_P3=[]
+    citreon_vin=[]
     start_time = datetime.datetime.now()
     message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
     while True:
-        message = can_bus.recv()
+        message = Message(data=[1, 2, 3, 4, 5],arbitration_id=533) #533 = 0x215
+        #message = can_bus.recv()
         if message.arbitration_id == 0x215:
-            citreon_vin_P1= message.data
+            citreon_vin[0:3]= message.data
         if message.arbitration_id == 0x073:
-            citreon_vin_P2= message.data
+            citreon_vin[3:9]= message.data
         if message.arbitration_id == 0x201:
-            citreon_vin_P3= message.data
-        #fullvin = citreon_vin_P1+citreon_vin_P2+citreon_vin_P3
-        #print(citreon_vin_P1+citreon_vin_P2+citreon_vin_P3)
-        print(citreon_vin_P1)
-        print(citreon_vin_P2)
-        print(citreon_vin_P3)
-        #ascii_bytes=[]
-        #for i,val in enumerate(fullvin):
-        #    ascii_bytes.append(bytes(val).decode("ASCII"))
-        #    
-        #print( ascii_bytes )
+            citreon_vin[9:17]= message.data
+        print(citreon_vin)
+        ascii_bytes=[]
+        for i,val in enumerate(citreon_vin):
+            ascii_bytes.append(bytes(val).decode("ASCII"))
+            
+        print( ascii_bytes )
         current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
             break
