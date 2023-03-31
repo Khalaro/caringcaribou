@@ -59,7 +59,6 @@ def main():
     #can_bus.send(message)
     #canddd=444
     citreon_vin=[]
-    ascii_bytes=[]
     start_time = datetime.datetime.now()
     message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
@@ -72,8 +71,9 @@ def main():
         if message.arbitration_id == 0x201:
             citreon_vin[16:24]= message.data[0:8]
         print(citreon_vin)
+        ascii_bytes=[]
         for i,val in enumerate(citreon_vin):
-            ascii_bytes[i] = (bytes(val).decode("ASCII"))
+            ascii_bytes.append(bytes(val).decode("ASCII"))
             
         print( ascii_bytes )
         current_time = datetime.datetime.now()
