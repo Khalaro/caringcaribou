@@ -65,11 +65,11 @@ def main():
     while True:
         message = can_bus.recv()
         if message.arbitration_id == 0x215:
-            citreon_vin[0:3]= message.data[0:3]
+            citreon_vin[0:3]= message.data
         if message.arbitration_id == 0x073:
-            citreon_vin[3:9]= message.data[0:7]
+            citreon_vin[3:9]= message.data
         if message.arbitration_id == 0x201:
-            citreon_vin[9:17]= message.data[0:8]
+            citreon_vin[9:17]= message.data
         print(citreon_vin)
         ascii_bytes=[]
         for i,val in enumerate(citreon_vin):
