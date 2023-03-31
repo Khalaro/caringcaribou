@@ -74,7 +74,7 @@ def main():
         print(citreon_vin)
         for i,val in enumerate(citreon_vin):
             ascii_bytes[i] = (bytes(val).decode("ASCII"))
-        #citreon_vin_string = string(ascii_bytes)
+            
         print( ascii_bytes )
         current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
