@@ -66,12 +66,21 @@ def main():
     while True:
         message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
         #message = can_bus.recv()
-        if message.arbitration_id == 0x215:
-            citreon_vin[0:3]= message.data
-        if message.arbitration_id == 0x073:
-            citreon_vin[3:9]= message.data
-        if message.arbitration_id == 0x201:
-            citreon_vin[9:17]= message.data
+        #if message.arbitration_id == 0x215:
+        #    citreon_vin[0:3]= message.data
+        #if message.arbitration_id == 0x073:
+        #    citreon_vin[3:9]= message.data
+        #if message.arbitration_id == 0x201:
+        #    citreon_vin[9:17]= message.data
+        for indx,val in enumerate(citreon_vin[0:3]):
+            val = message.data[indx]
+        for indx,val in enumerate(citreon_vin[3:9]):
+            val = message.data[indx]
+        for indx,val in enumerate(citreon_vin[9:17]):
+            val = message.data[indx]
+        #citreon_vin[0:3]= message.data
+        #citreon_vin[3:9]= message.data
+        #citreon_vin[9:17]= message.data
         print(citreon_vin)
         ascii_bytes=[]
         for i,val in enumerate(citreon_vin):
