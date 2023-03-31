@@ -5,8 +5,8 @@ import os
 import datetime
 import subprocess
 import can
-from can import Message
-from can import Filter
+#from can import Message
+#from can import Filter
 
 
 
