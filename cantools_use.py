@@ -64,7 +64,25 @@ def main():
     start_time = datetime.datetime.now()
     #message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
-    while True:
+    
+    messagelist=[]
+    message1 = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
+    message2 = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=0x073)
+    message3 = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=0x201) 
+    messagelist.append(message1)
+    messagelist.append(message2)
+    messagelist.append(message3)
+    #message = can_bus.recv()
+    for message in messagelist:
+        if message.arbitration_id == 0x215:
+            citreon_vin[0:3]= message.data
+        if message.arbitration_id == 0x073:
+            citreon_vin[3:9]= message.data
+        if message.arbitration_id == 0x201:
+            citreon_vin[9:17]= message.data
+    
+    print(citreon_vin)
+    while False:
         message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
         #message = can_bus.recv()
         if message.arbitration_id == 0x215:
