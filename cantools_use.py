@@ -63,9 +63,9 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
 
 
 def main():  
-    filters = [{"can_id": 0x215, "can_mask": 0x7FF, "extended": False}, 
-			{"can_id": 0x073, "can_mask": 0x7FF, "extended": False}, 
-			{"can_id": 0x201, "can_mask": 0x7FF, "extended": False}]
+    filters = [{"can_id": 0x215, "can_mask": 0x2FF, "extended": False}, 
+			{"can_id": 0x073, "can_mask": 0x0FF, "extended": False}, 
+			{"can_id": 0x201, "can_mask": 0x2FF, "extended": False}]
     can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
     #can_bus = can.ThreadSafeBus(channel='can0', bustype='socketcan', can_filters=filters)
     #data = example_message.encode({'Temperature': 250.1, 'AverageRadius': 3.2, 'Enable': 1})
@@ -119,7 +119,7 @@ def main():
             citreon_vin[9:17]= message.data
     
     print(citreon_vin)
-    notifier.stop()
+    #notifier.stop()
     #while False:
     #    message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
     #    #message = can_bus.recv()
