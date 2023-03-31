@@ -83,11 +83,11 @@ def main():
         #citreon_vin[3:9]= message.data
         #citreon_vin[9:17]= message.data
         print(citreon_vin)
-        ascii_bytes.clear()
-        for i,val in enumerate(citreon_vin):
-            ascii_bytes.append(bytes(val).decode("ASCII"))
-            
-        print( ascii_bytes )
+        #ascii_bytes=[]
+        #for i,val in enumerate(citreon_vin):
+        #    ascii_bytes.append(bytes(val).decode("ASCII"))
+        #    
+        #print( ascii_bytes )
         current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
             break
