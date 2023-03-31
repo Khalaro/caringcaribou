@@ -88,7 +88,7 @@ def main():
     #message = can_bus.recv()
     
     mylistener=CustomListener()
-    notifier = can.Notifier(can_bus, mylistener)
+    notifier = can.Notifier(can_bus, mylistener, timeout=8.0)
     
     mylistener.on_message_received(message1)
     mylistener.on_message_received(message2)
@@ -119,6 +119,7 @@ def main():
             citreon_vin[9:17]= message.data
     
     print(citreon_vin)
+    notifier.stop()
     #while False:
     #    message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
     #    #message = can_bus.recv()
