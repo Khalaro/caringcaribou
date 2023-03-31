@@ -67,7 +67,7 @@ def main():
 			{"can_id": 0x073, "can_mask": 0x7FF, "extended": False}, 
 			{"can_id": 0x201, "can_mask": 0x7FF, "extended": False}]
     #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
-    can_bus = can.interface.ThreadSafeBus('can0', bustype='socketcan', can_filters=filters)
+    can_bus = can.ThreadSafeBus(channel='can0', bustype='socketcan', can_filters=filters)
     #data = example_message.encode({'Temperature': 250.1, 'AverageRadius': 3.2, 'Enable': 1})
     #message = can.Message(arbitration_id=example_message.frame_id, data=data)
     #can_bus.send(message)
