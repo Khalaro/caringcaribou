@@ -16,6 +16,14 @@ my_dict = {
     'KEY': re.compile(r'.'),
 }
 
+class CustomListener(can.Listener):
+    def __init__(self):
+        self.messages = []
+    
+    def on_message_received(self, msg):
+        if msg.arbitration_id in [0x215, 0x073, 0x201]:
+            self.messages.append(msg)
+            print("Received message with arbitration ID {}: {}".format(msg.arbitration_id, msg.data))
 
 def validate_vin(vinsample): #string
     # We should check the string for special characters before attempting to send to nshta
@@ -73,7 +81,27 @@ def main():
     messagelist.append(message2)
     messagelist.append(message3)
     #message = can_bus.recv()
-    for message in messagelist:
+    filters = [can.Filter(arbitration_id=0x215, extended_id=False),
+                can.Filter(arbitration_id=0x073, extended_id=False),
+                can.Filter(arbitration_id=0x201, extended_id=False)]
+    
+    notifier = can.Notifier(can_bus, filters)
+    
+    mylistener=CustomListener()
+    notifier.add_listener(mylistener)
+    
+    #for message in messagelist:
+    #    if message.arbitration_id == 0x215:
+    #        citreon_vin[0:3]= message.data
+    #    if message.arbitration_id == 0x073:
+    #        citreon_vin[3:9]= message.data
+    #    if message.arbitration_id == 0x201:
+    #        citreon_vin[9:17]= message.data
+
+    while True:
+        if (current_time - start_time).total_seconds() >= 10:
+            break    
+    for message in mylistener.messages:
         if message.arbitration_id == 0x215:
             citreon_vin[0:3]= message.data
         if message.arbitration_id == 0x073:
@@ -82,33 +110,33 @@ def main():
             citreon_vin[9:17]= message.data
     
     print(citreon_vin)
-    while False:
-        message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
-        #message = can_bus.recv()
-        if message.arbitration_id == 0x215:
-            citreon_vin[0:3]= message.data
-        if message.arbitration_id == 0x073:
-            citreon_vin[3:9]= message.data
-        if message.arbitration_id == 0x201:
-            citreon_vin[9:17]= message.data
-        #for indx,val in enumerate(citreon_vin[0:3]):
-        #    val = message.data[indx]
-        #for indx,val in enumerate(citreon_vin[3:9]):
-        #    val = message.data[indx]
-        #for indx,val in enumerate(citreon_vin[9:17]):
-        #    val = message.data[indx]
-        #citreon_vin[0:3]= message.data
-        #citreon_vin[3:9]= message.data
-        #citreon_vin[9:17]= message.data
-        print(citreon_vin)
-        #ascii_bytes=[]
-        #for i,val in enumerate(citreon_vin):
-        #    ascii_bytes.append(bytes(val).decode("ASCII"))
-        #    
-        #print( ascii_bytes )
-        current_time = datetime.datetime.now()
-        if (current_time - start_time).total_seconds() >= 10:
-            break
+    #while False:
+    #    message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
+    #    #message = can_bus.recv()
+    #    if message.arbitration_id == 0x215:
+    #        citreon_vin[0:3]= message.data
+    #    if message.arbitration_id == 0x073:
+    #        citreon_vin[3:9]= message.data
+    #    if message.arbitration_id == 0x201:
+    #        citreon_vin[9:17]= message.data
+    #    #for indx,val in enumerate(citreon_vin[0:3]):
+    #    #    val = message.data[indx]
+    #    #for indx,val in enumerate(citreon_vin[3:9]):
+    #    #    val = message.data[indx]
+    #    #for indx,val in enumerate(citreon_vin[9:17]):
+    #    #    val = message.data[indx]
+    #    #citreon_vin[0:3]= message.data
+    #    #citreon_vin[3:9]= message.data
+    #    #citreon_vin[9:17]= message.data
+    #    print(citreon_vin)
+    #    #ascii_bytes=[]
+    #    #for i,val in enumerate(citreon_vin):
+    #    #    ascii_bytes.append(bytes(val).decode("ASCII"))
+    #    #    
+    #    #print( ascii_bytes )
+    #    current_time = datetime.datetime.now()
+    #    if (current_time - start_time).total_seconds() >= 10:
+    #        break
     
         
 main()
