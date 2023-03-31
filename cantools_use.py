@@ -70,8 +70,7 @@ def main():
         if message.arbitration_id == 0x073:
             citreon_vin[7:15]= message.data
         if message.arbitration_id == 0x201:
-            citreon_vin[15:23]= message.data
-        ascii_bytes=[]
+            citreon_vin[15:23]= message.data[0:7]
         print(citreon_vin)
         for i,val in enumerate(citreon_vin):
             ascii_bytes[i] = (bytes(val).decode("ASCII"))
