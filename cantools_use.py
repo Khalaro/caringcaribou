@@ -78,6 +78,7 @@ def main():
     start_time = datetime.datetime.now()
     #message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
+
     
     messagelist=[]
     message1 = can.Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
@@ -90,7 +91,7 @@ def main():
     
     mylistener=CustomListener()
     notifier = can.Notifier(can_bus, mylistener, timeout=8.0)
-    
+    can_bus.recv()
     mylistener.on_message_received(message1)
     mylistener.on_message_received(message2)
     mylistener.on_message_received(message3)
