@@ -81,14 +81,17 @@ def main():
     message1 = can.Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
     message2 = can.Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=0x073)
     message3 = can.Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=0x201) 
-    messagelist.append(message1)
-    messagelist.append(message2)
-    messagelist.append(message3)
+    #messagelist.append(message1)
+    #messagelist.append(message2)
+    #messagelist.append(message3)
     #message = can_bus.recv()
     
     mylistener=CustomListener()
     notifier = can.Notifier(can_bus, mylistener)
     
+    mylistener.on_message_received(message1)
+    mylistener.on_message_received(message2)
+    mylistener.on_message_received(message3)
     #notifier.add_listener(mylistener)
     
     #for message in messagelist:
