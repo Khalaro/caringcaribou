@@ -60,29 +60,30 @@ def main():
     #can_bus.send(message)
     #canddd=444
     citreon_vin=[]
+    ascii_bytes=[]
     start_time = datetime.datetime.now()
     #message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
     while True:
         message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
         #message = can_bus.recv()
-        #if message.arbitration_id == 0x215:
-        #    citreon_vin[0:3]= message.data
-        #if message.arbitration_id == 0x073:
-        #    citreon_vin[3:9]= message.data
-        #if message.arbitration_id == 0x201:
-        #    citreon_vin[9:17]= message.data
-        for indx,val in enumerate(citreon_vin[0:3]):
-            val = message.data[indx]
-        for indx,val in enumerate(citreon_vin[3:9]):
-            val = message.data[indx]
-        for indx,val in enumerate(citreon_vin[9:17]):
-            val = message.data[indx]
+        if message.arbitration_id == 0x215:
+            citreon_vin[0:3]= message.data
+        if message.arbitration_id == 0x073:
+            citreon_vin[3:9]= message.data
+        if message.arbitration_id == 0x201:
+            citreon_vin[9:17]= message.data
+        #for indx,val in enumerate(citreon_vin[0:3]):
+        #    val = message.data[indx]
+        #for indx,val in enumerate(citreon_vin[3:9]):
+        #    val = message.data[indx]
+        #for indx,val in enumerate(citreon_vin[9:17]):
+        #    val = message.data[indx]
         #citreon_vin[0:3]= message.data
         #citreon_vin[3:9]= message.data
         #citreon_vin[9:17]= message.data
         print(citreon_vin)
-        ascii_bytes=[]
+        ascii_bytes.clear()
         for i,val in enumerate(citreon_vin):
             ascii_bytes.append(bytes(val).decode("ASCII"))
             
