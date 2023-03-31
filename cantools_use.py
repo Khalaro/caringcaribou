@@ -61,10 +61,10 @@ def main():
     #canddd=444
     citreon_vin=[]
     start_time = datetime.datetime.now()
-    message = can_bus.recv()
+    #message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
     while True:
-        message = Message(data=[1, 2, 3, 4, 5],arbitration_id=533) #533 = 0x215
+        message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
         #message = can_bus.recv()
         if message.arbitration_id == 0x215:
             citreon_vin[0:3]= message.data
