@@ -75,9 +75,9 @@ def main():
     #db.decode_message(message.arbitration_id, message.data)
     
     messagelist=[]
-    message1 = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
-    message2 = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=0x073)
-    message3 = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=0x201) 
+    message1 = can.Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
+    message2 = can.Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=0x073)
+    message3 = can.Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=0x201) 
     messagelist.append(message1)
     messagelist.append(message2)
     messagelist.append(message3)
