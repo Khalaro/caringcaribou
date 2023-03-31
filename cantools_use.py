@@ -6,6 +6,7 @@ import datetime
 import subprocess
 import can
 from can import Message
+from can import Filter
 
 
 
