@@ -22,7 +22,7 @@ class CustomListener(can.Listener):
         self.messages = []
     
     def on_message_received(self, msg):
-        if msg.arbitration_id in [0x215, 0x073, 0x201]:
+        if True#msg.arbitration_id in [0x215, 0x073, 0x201]:
             self.messages.append(msg)
             print("Received message with arbitration ID {}: {}".format(msg.arbitration_id, msg.data))
 
@@ -66,7 +66,8 @@ def main():
     filters = [{"can_id": 0x215, "can_mask": 0x2FF, "extended": False}, 
 			{"can_id": 0x073, "can_mask": 0x0FF, "extended": False}, 
 			{"can_id": 0x201, "can_mask": 0x2FF, "extended": False}]
-    can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+    #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+    can_bus = can.interface.Bus('can0', bustype='socketcan')
     #can_bus = can.ThreadSafeBus(channel='can0', bustype='socketcan', can_filters=filters)
     #data = example_message.encode({'Temperature': 250.1, 'AverageRadius': 3.2, 'Enable': 1})
     #message = can.Message(arbitration_id=example_message.frame_id, data=data)
