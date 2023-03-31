@@ -59,6 +59,7 @@ def main():
     #can_bus.send(message)
     #canddd=444
     citreon_vin=[]
+    ascii_bytes=[]
     start_time = datetime.datetime.now()
     message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
@@ -70,9 +71,12 @@ def main():
             citreon_vin[7:15]= message.data
         if message.arbitration_id == 0x201:
             citreon_vin[15:23]= message.data
+        ascii_bytes=[]
         print(citreon_vin)
-        citreon_vin_string = (bytes(citreon_vin).decode("ASCII"))
-        print( citreon_vin_string )
+        for i,val in enumerate(citreon_vin):
+            ascii_bytes[i] = (bytes(val).decode("ASCII"))
+        #citreon_vin_string = string(ascii_bytes)
+        print( ascii_bytes )
         current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
             break
