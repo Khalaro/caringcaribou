@@ -86,10 +86,10 @@ def main():
     messagelist.append(message3)
     #message = can_bus.recv()
     
+    mylistener=CustomListener()
     notifier = can.Notifier(can_bus, mylistener)
     
-    mylistener=CustomListener()
-    notifier.add_listener(mylistener)
+    #notifier.add_listener(mylistener)
     
     #for message in messagelist:
     #    if message.arbitration_id == 0x215:
@@ -98,7 +98,10 @@ def main():
     #        citreon_vin[3:9]= message.data
     #    if message.arbitration_id == 0x201:
     #        citreon_vin[9:17]= message.data
-
+	
+	
+    if len(mylistener.messages) > 0:
+	print(len(mylistener.messages))
     while True:
         if (current_time - start_time).total_seconds() >= 10:
             break    
