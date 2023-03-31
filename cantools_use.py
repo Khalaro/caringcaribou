@@ -58,21 +58,24 @@ def main():
     #message = can.Message(arbitration_id=example_message.frame_id, data=data)
     #can_bus.send(message)
     #canddd=444
-    citreon_vin=[]
+    citreon_vin_P1=[]
+    citreon_vin_P2=[]
+    citreon_vin_P3=[]
     start_time = datetime.datetime.now()
     message = can_bus.recv()
     #db.decode_message(message.arbitration_id, message.data)
     while True:
         message = can_bus.recv()
         if message.arbitration_id == 0x215:
-            citreon_vin[0:3]= message.data
+            citreon_vin_P1= message.data
         if message.arbitration_id == 0x073:
-            citreon_vin[3:9]= message.data
+            citreon_vin_P2= message.data
         if message.arbitration_id == 0x201:
-            citreon_vin[9:17]= message.data
-        print(citreon_vin)
+            citreon_vin_P3= message.data
+        fullvin = citreon_vin_P1+citreon_vin_P2+citreon_vin_P3
+        print(citreon_vin_P1+citreon_vin_P2+citreon_vin_P3)
         ascii_bytes=[]
-        for i,val in enumerate(citreon_vin):
+        for i,val in enumerate(fullvin):
             ascii_bytes.append(bytes(val).decode("ASCII"))
             
         print( ascii_bytes )
