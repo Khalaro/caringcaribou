@@ -103,6 +103,7 @@ def main():
     if len(mylistener.messages) > 0:
 	print(len(mylistener.messages))
     while True:
+	current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
             break    
     for message in mylistener.messages:
