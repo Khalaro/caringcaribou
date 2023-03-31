@@ -72,13 +72,16 @@ def main():
             citreon_vin_P2= message.data
         if message.arbitration_id == 0x201:
             citreon_vin_P3= message.data
-        fullvin = citreon_vin_P1+citreon_vin_P2+citreon_vin_P3
-        print(citreon_vin_P1+citreon_vin_P2+citreon_vin_P3)
-        ascii_bytes=[]
-        for i,val in enumerate(fullvin):
-            ascii_bytes.append(bytes(val).decode("ASCII"))
-            
-        print( ascii_bytes )
+        #fullvin = citreon_vin_P1+citreon_vin_P2+citreon_vin_P3
+        #print(citreon_vin_P1+citreon_vin_P2+citreon_vin_P3)
+        print(citreon_vin_P1)
+        print(citreon_vin_P2)
+        print(citreon_vin_P3)
+        #ascii_bytes=[]
+        #for i,val in enumerate(fullvin):
+        #    ascii_bytes.append(bytes(val).decode("ASCII"))
+        #    
+        #print( ascii_bytes )
         current_time = datetime.datetime.now()
         if (current_time - start_time).total_seconds() >= 10:
             break
