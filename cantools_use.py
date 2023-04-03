@@ -116,7 +116,7 @@ def test_read_and_translate():
 		citreon_vin[9:17]= message.data
 		segC=True
 	current_time = datetime.datetime.now()
-	if (segA && segB && segC):
+	if (segA and segB and segC):
 		print("ALL VALUES FOUND!!!!!!")
 		print(citreon_vin)
 		break
