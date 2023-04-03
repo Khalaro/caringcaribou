@@ -108,23 +108,29 @@ def test_read_and_translate():
 	message = can_bus.recv()
 	if message.arbitration_id == 0x215:
 		citreon_vin[0:3]= message.data
+		print(message.data)
 		segA=True
 	if message.arbitration_id == 0x073:
 		citreon_vin[3:9]= message.data
+		print(message.data)
 		segB=True
 	if message.arbitration_id == 0x201:
 		citreon_vin[9:17]= message.data
+		print(message.data)
 		segC=True
 	current_time = datetime.datetime.now()
 	if (segA and segB and segC):
-		print("ALL VALUES FOUND!!!!!!")
+		print("ALL CIITROEN VIN VALUES FOUND!!!!!!")
 		print(citreon_vin)
 		break
 	if (current_time - start_time).total_seconds() >= 10:
 		break
     print('OUT 3:')
     print(message)
-    print(citreon_vin)
+    citreon_vin_string = ''
+    for chrctr in citreon_vin
+	citreon_vin_string+=char(chrctr)
+    print(citreon_vin_string)
     #if message.arbitration_id == 0x215:
     #    citreon_vin[0:3]= message.data
     #if message.arbitration_id == 0x073:
