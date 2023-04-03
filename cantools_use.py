@@ -91,10 +91,13 @@ def main():
     
     mylistener=CustomListener()
     notifier = can.Notifier(can_bus, mylistener, timeout=8.0)
-    can_bus.recv()
-    mylistener.on_message_received(message1)
-    mylistener.on_message_received(message2)
-    mylistener.on_message_received(message3)
+    time.sleep(1.0)
+    for msg in mylistener.messages:
+	print(msg)
+    #can_bus.recv()
+    #mylistener.on_message_received(message1)
+    #mylistener.on_message_received(message2)
+    #mylistener.on_message_received(message3)
     #notifier.add_listener(mylistener)
     
     #for message in messagelist:
@@ -105,22 +108,23 @@ def main():
     #    if message.arbitration_id == 0x201:
     #        citreon_vin[9:17]= message.data
 	
+    if False:	
+	    if len(mylistener.messages) > 0:
+		print(len(mylistener.messages))
+	    while True:
+		current_time = datetime.datetime.now()
+		if (current_time - start_time).total_seconds() >= 10:
+		    break    
+	    for message in mylistener.messages:
+		if message.arbitration_id == 0x215:
+		    citreon_vin[0:3]= message.data
+		if message.arbitration_id == 0x073:
+		    citreon_vin[3:9]= message.data
+		if message.arbitration_id == 0x201:
+		    citreon_vin[9:17]= message.data
+
+	    print(citreon_vin)
 	
-    if len(mylistener.messages) > 0:
-	print(len(mylistener.messages))
-    while True:
-	current_time = datetime.datetime.now()
-        if (current_time - start_time).total_seconds() >= 10:
-            break    
-    for message in mylistener.messages:
-        if message.arbitration_id == 0x215:
-            citreon_vin[0:3]= message.data
-        if message.arbitration_id == 0x073:
-            citreon_vin[3:9]= message.data
-        if message.arbitration_id == 0x201:
-            citreon_vin[9:17]= message.data
-    
-    print(citreon_vin)
     #notifier.stop()
     #while False:
     #    message = Message(data=[1, 2, 3, 4, 5, 6, 7, 8],arbitration_id=533) #533 = 0x215
