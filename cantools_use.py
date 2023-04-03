@@ -128,7 +128,7 @@ def test_read_and_translate():
     print('OUT 3:')
     print(message)
     citreon_vin_string = ''
-    for chrctr in citreon_vin
+    for chrctr in citreon_vin:
 	citreon_vin_string+=char(chrctr)
     print(citreon_vin_string)
     #if message.arbitration_id == 0x215:
