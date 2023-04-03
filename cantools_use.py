@@ -93,6 +93,44 @@ def test_read():
     #    citreon_vin[9:17]= message.data
 
 
+def test_read_and_translate(): 
+    filters = [{"can_id": 0x215, "can_mask": 0x2FF, "extended": False}, 
+			{"can_id": 0x073, "can_mask": 0x0FF, "extended": False}, 
+			{"can_id": 0x201, "can_mask": 0x2FF, "extended": False}]
+    can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+    #can_bus = can.ThreadSafeBus(channel='can0', bustype='socketcan', can_filters=filters)
+    segA=False
+    segB=False
+    segC=False
+    start_time = datetime.datetime.now()
+    citreon_vin=[]
+    while True:
+	message = can_bus.recv()
+	if message.arbitration_id == 0x215:
+		citreon_vin[0:3]= message.data
+		segA=True
+	if message.arbitration_id == 0x073:
+		citreon_vin[3:9]= message.data
+		segB=True
+	if message.arbitration_id == 0x201:
+		citreon_vin[9:17]= message.data
+		segC=True
+	current_time = datetime.datetime.now()
+	if (segA && segB && segC):
+		print("ALL VALUES FOUND!!!!!!")
+		print(citreon_vin)
+		break
+	if (current_time - start_time).total_seconds() >= 10:
+		break
+    print('OUT 3:')
+    print(message)
+    print(citreon_vin)
+    #if message.arbitration_id == 0x215:
+    #    citreon_vin[0:3]= message.data
+    #if message.arbitration_id == 0x073:
+    #    citreon_vin[3:9]= message.data
+    #if message.arbitration_id == 0x201:
+    #    citreon_vin[9:17]= message.data
 
 def test_read_v2(): 
     filters = [{"can_id": 0x215, "can_mask": 0x2FF, "extended": False}, 
@@ -188,10 +226,12 @@ def test_read_v2():
     #        break
     
 def main():  
-    
-    if True: 
-	test_read()
-    else:
-	test_read_v2()
+    if True:
+	test_read_and_translate()
+	else:
+	    if True: 
+		test_read()
+	    else:
+		test_read_v2()
         
 main()
