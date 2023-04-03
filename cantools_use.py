@@ -228,10 +228,10 @@ def test_read_v2():
 def main():  
     if True:
 	test_read_and_translate()
-	else:
-	    if True: 
-		test_read()
-	    else:
-		test_read_v2()
+	#else:
+	#    if True: 
+	#	test_read()
+	#    else:
+	#	test_read_v2()
         
 main()
