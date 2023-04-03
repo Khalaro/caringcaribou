@@ -83,7 +83,7 @@ def test_read():
     #citreon_vin[0:3]= message.data
     #citreon_vin[3:9]= message.data
     #citreon_vin[9:17]= message.data
-    print(citreon_vin)
+    print(message)
     #ascii_bytes=[]
     #for i,val in enumerate(citreon_vin):
     #    ascii_bytes.append(bytes(val).decode("ASCII"))
@@ -93,8 +93,7 @@ def test_read():
     #if (current_time - start_time).total_seconds() >= 10:
     #    break
 
-
-def main():  
+def test_read_v2(): 
     filters = [{"can_id": 0x215, "can_mask": 0x2FF, "extended": False}, 
 			{"can_id": 0x073, "can_mask": 0x0FF, "extended": False}, 
 			{"can_id": 0x201, "can_mask": 0x2FF, "extended": False}]
@@ -187,5 +186,11 @@ def main():
     #    if (current_time - start_time).total_seconds() >= 10:
     #        break
     
+def main():  
+    
+    if True: 
+	test_read()
+    else:
+	test_read_v2()
         
 main()
