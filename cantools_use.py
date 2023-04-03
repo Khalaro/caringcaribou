@@ -16,7 +16,7 @@ my_dict = {
     #'VIN_VALUE': re.compile(r'value: (?P<VIN_VALUE>[A-Za-z0-9]+)'),
     'VIN_VALUE': re.compile(r'\bvalue: (?P<VIN_VALUE>[A-Za-z0-9]+)'),
     'KEY': re.compile(r'.'),
-}
+	}
 
 class CustomListener(can.Listener):
     def __init__(self):
@@ -64,7 +64,10 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
 
 
 def test_read(): 
-    can_bus = can.interface.Bus('can0', bustype='socketcan')
+    filters = [{"can_id": 0x215, "can_mask": 0x2FF, "extended": False}, 
+			{"can_id": 0x073, "can_mask": 0x0FF, "extended": False}, 
+			{"can_id": 0x201, "can_mask": 0x2FF, "extended": False}]
+    can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
     #can_bus = can.ThreadSafeBus(channel='can0', bustype='socketcan', can_filters=filters)
     message = can_bus.recv()
     print('OUT 1:')
@@ -72,6 +75,15 @@ def test_read():
     time.sleep(10.0) 
     print('OUT 2:')
     print(message)
+
+    start_time = datetime.datetime.now()
+    while True:
+	message = can_bus.recv()
+        print('OUT 3:')
+        print(message)
+	current_time = datetime.datetime.now()
+	if (current_time - start_time).total_seconds() >= 10:
+		break
     #if message.arbitration_id == 0x215:
     #    citreon_vin[0:3]= message.data
     #if message.arbitration_id == 0x073:
