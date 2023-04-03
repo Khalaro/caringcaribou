@@ -73,6 +73,7 @@ def test_read():
     print('OUT 1:')
     print(message)
     time.sleep(10.0) 
+    message = can_bus.recv()
     print('OUT 2:')
     print(message)
 
