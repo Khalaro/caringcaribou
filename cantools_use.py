@@ -89,9 +89,9 @@ def test_read():
     #    ascii_bytes.append(bytes(val).decode("ASCII"))
     #    
     #print( ascii_bytes )
-    current_time = datetime.datetime.now()
-    if (current_time - start_time).total_seconds() >= 10:
-        break
+    #current_time = datetime.datetime.now()
+    #if (current_time - start_time).total_seconds() >= 10:
+    #    break
 
 
 def main():  
