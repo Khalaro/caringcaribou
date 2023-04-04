@@ -163,8 +163,11 @@ def test_read_v3():
 	mylistener=CustomListener()
 	#notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
 	notifier = can.Notifier(can_bus, [mylistener,])
-
-	while True:
+	
+	found_vin, found_protocol = get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas)
+	print(found_vin)
+	print(found_protocol)
+	while False:
 		#can_bus.recv()
 		current_time = datetime.datetime.now()
 		if (current_time - start_time).total_seconds() >= 10:
