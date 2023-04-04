@@ -26,7 +26,7 @@ class CustomListener(can.Listener):
 		#print(msg)
 		if msg.arbitration_id in [0x215, 0x073, 0x201]:
 			self.messages.append(msg)
-			print("Received message with arbitration ID {}: {}".format(msg.arbitration_id, msg.data))
+			print("Received message with arbitration ID {}:".format(msg.arbitration_id,))
 
 def validate_vin(vinsample): #string
     # We should check the string for special characters before attempting to send to nshta
