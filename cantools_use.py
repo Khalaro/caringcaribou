@@ -137,8 +137,8 @@ def test_read_v2():
     filters = [{"can_id": 0x215, "can_mask": 0x7FF, "extended": False}, 
 			{"can_id": 0x073, "can_mask": 0x7FF, "extended": False}, 
 			{"can_id": 0x201, "can_mask": 0x7FF, "extended": False}]
-    #can_bus = can.interface.Bus('can0', bustype='socketcan')
-    can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+    can_bus = can.interface.Bus('can0', bustype='socketcan')
+    #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
     #can_bus = can.ThreadSafeBus('can0', bustype='socketcan')
     #can_bus = can.ThreadSafeBus(channel='can0', bustype='socketcan', can_filters=filters)
     #data = example_message.encode({'Temperature': 250.1, 'AverageRadius': 3.2, 'Enable': 1})
@@ -162,7 +162,8 @@ def test_read_v2():
     #message = can_bus.recv()
     
     mylistener=CustomListener()
-    notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
+    #notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
+    notifier = can.Notifier(can_bus, [mylistener,])
 
     while True:
 	current_time = datetime.datetime.now()
