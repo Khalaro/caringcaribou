@@ -134,12 +134,12 @@ def test_read_and_translate():
     #print(citreon_vin_string)
 
 def test_read_v2(): 
-    filters = [{"can_id": 0x215, "can_mask": 0x2FF, "extended": False}, 
-			{"can_id": 0x073, "can_mask": 0x0FF, "extended": False}, 
-			{"can_id": 0x201, "can_mask": 0x2FF, "extended": False}]
-    #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+    filters = [{"can_id": 0x215, "can_mask": 0x7FF, "extended": False}, 
+			{"can_id": 0x073, "can_mask": 0x7FF, "extended": False}, 
+			{"can_id": 0x201, "can_mask": 0x7FF, "extended": False}]
     #can_bus = can.interface.Bus('can0', bustype='socketcan')
-    can_bus = can.ThreadSafeBus('can0', bustype='socketcan')
+    can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+    #can_bus = can.ThreadSafeBus('can0', bustype='socketcan')
     #can_bus = can.ThreadSafeBus(channel='can0', bustype='socketcan', can_filters=filters)
     #data = example_message.encode({'Temperature': 250.1, 'AverageRadius': 3.2, 'Enable': 1})
     #message = can.Message(arbitration_id=example_message.frame_id, data=data)
@@ -162,8 +162,9 @@ def test_read_v2():
     #message = can_bus.recv()
     
     mylistener=CustomListener()
-    notifier = can.Notifier(can_bus, mylistener, timeout=8.0)
-    time.sleep(10.0)
+    notifier = can.Notifier(can_bus, [mylistener,], timeout=10.0)
+    #time.sleep(10.0)
+
     for msg in mylistener.messages:
 	print(msg)
     #can_bus.recv()
@@ -228,7 +229,8 @@ def test_read_v2():
     
 def main():  
     if True:
-	test_read_and_translate()
+	test_read_v2()
+	#test_read_and_translate()
 	#else:
 	#    if True: 
 	#	test_read()
