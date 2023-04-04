@@ -178,6 +178,8 @@ def test_read_v3():
 		for msg in mylistener.messages:
 			print(msg)
 	     		#can_bus.recv()
+	notifier.stop()
+	bus.shutdown()
 	     
     
 def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
