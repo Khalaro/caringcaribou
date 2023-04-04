@@ -22,6 +22,8 @@ class CustomListener(can.Listener):
 	def __init__(self):
 		self.messages = []
 	def on_message_received(self, msg):
+		print("on_message_received:")
+		print(msg)
 		if msg.arbitration_id in [0x215, 0x073, 0x201]:
 			self.messages.append(msg)
 			print("Received message with arbitration ID {}: {}".format(msg.arbitration_id, msg.data))
