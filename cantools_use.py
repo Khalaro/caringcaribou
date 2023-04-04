@@ -19,13 +19,13 @@ my_dict = {
 	}
 
 class CustomListener(can.Listener):
-    def __init__(self):
-        self.messages = []
+	def __init__(self):
+		self.messages = []
     
     def on_message_received(self, msg):
-        if True:  #msg.arbitration_id in [0x215, 0x073, 0x201]:
-            self.messages.append(msg)
-            print("Received message with arbitration ID {}: {}".format(msg.arbitration_id, msg.data))
+        if msg.arbitration_id in [0x215, 0x073, 0x201]:
+		self.messages.append(msg)
+		print("Received message with arbitration ID {}: {}".format(msg.arbitration_id, msg.data))
 
 def validate_vin(vinsample): #string
     # We should check the string for special characters before attempting to send to nshta
@@ -238,6 +238,7 @@ def test_read_v3():
     can_bus = can.interface.Bus('can0', bustype='socketcan')
     #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
     start_time = datetime.datetime.now()
+    print("test1")	
     #message = can_bus.recv()
     mylistener=CustomListener()
     #notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
@@ -259,6 +260,7 @@ def test_read_v3():
 
 def main():  
     if True:
+	print("test1")
 	test_read_v3()
 	#test_read_v2()
 	#test_read_and_translate()
