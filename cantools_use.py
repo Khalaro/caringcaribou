@@ -179,7 +179,7 @@ def test_read_v3():
 			print(msg)
 	     		#can_bus.recv()
 	notifier.stop()
-	bus.shutdown()
+	can_bus.shutdown()
 	     
     
 def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
