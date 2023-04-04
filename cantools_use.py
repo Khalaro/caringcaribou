@@ -33,7 +33,30 @@ def validate_vin(vinsample): #string
     else:
         return False
 
-     
+
+def test_read_v3(): 
+    can_bus = can.interface.Bus('can0', bustype='socketcan')
+    #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+    start_time = datetime.datetime.now()
+    print("test1")	
+    #message = can_bus.recv()
+    mylistener=CustomListener()
+    #notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
+    notifier = can.Notifier(can_bus, [mylistener,])
+
+    while True:
+	can_bus.recv()
+	current_time = datetime.datetime.now()
+	if (current_time - start_time).total_seconds() >= 10:
+	    break    
+             #can_bus.recv()
+    if mylistener.messages is null:
+	print("empty")
+    else:
+	for msg in mylistener.messages:
+		print(msg)
+             #can_bus.recv()
+	     
     
 def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
     for index,vin_code_slug in enumerate(VIN_CODE_LIST):
@@ -60,7 +83,6 @@ def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formu
      #      if os.path.isfile( output_filename):
     return "NOT FOUND","NOT FOUND"
                 #os.system("rm  "+output_filename)
-
 
 def test_read(): 
     filters = [{"can_id": 0x215, "can_mask": 0x2FF, "extended": False}, 
@@ -230,31 +252,7 @@ def test_read_v2():
     #    current_time = datetime.datetime.now()
     #    if (current_time - start_time).total_seconds() >= 10:
     #        break
-def test_read_v3(): 
-    filters = [{"can_id": 0x215, "can_mask": 0x7FF, "extended": False}, 
-			{"can_id": 0x073, "can_mask": 0x7FF, "extended": False}, 
-			{"can_id": 0x201, "can_mask": 0x7FF, "extended": False}]
-    can_bus = can.interface.Bus('can0', bustype='socketcan')
-    #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
-    start_time = datetime.datetime.now()
-    print("test1")	
-    #message = can_bus.recv()
-    mylistener=CustomListener()
-    #notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
-    notifier = can.Notifier(can_bus, [mylistener,])
 
-    while True:
-	can_bus.recv()
-	current_time = datetime.datetime.now()
-	if (current_time - start_time).total_seconds() >= 10:
-	    break    
-    #can_bus.recv()
-    if mylistener.messages is null:
-	print("empty")
-    else:
-	for msg in mylistener.messages:
-		print(msg)
-    #can_bus.recv()
 
 
 def main():  
