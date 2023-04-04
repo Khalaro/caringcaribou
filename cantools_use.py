@@ -37,28 +37,140 @@ def validate_vin(vinsample): #string
 
 
 def test_read_v3(): 
-    can_bus = can.interface.Bus('can0', bustype='socketcan')
-    #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
-    start_time = datetime.datetime.now()
-    print("test1")	
-    #message = can_bus.recv()
-    mylistener=CustomListener()
-    #notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
-    notifier = can.Notifier(can_bus, [mylistener,])
+	formulas= ["""'messages[0].data[3:20]'""",
+		"""'messages[0].data[3:20]'""",
+		"""'messages[0].data[3:20]'""",
+		#"""'int(messages[0].data[4:],16)/10'""",
+		#"""'int(messages[0].data[4:],16)/10'""",
+		#"""'int(messages[0].data[4:],16)/10'""",
+		"""'messages[0].data[3:20]'""",
+		"""'messages[0].data[3:20]'""",
+		"""'messages[0].data[4:21]'""",
+		"""'messages[0].data[4:21]'""",
+		"""'messages[0].data[3:20]'""",
+		"""'messages[0].data[4:21]'""",
+		"""'messages[0].data[2:19]'""",
+		"""'messages[0].data[2:19]'""",
+		"""'messages[0].data[5:22]'""",
+		"""'messages[0].data[5:22]'""",
+		"""'messages[0].data[2:19]'""",
+		"""'messages[0].data[5:22]'"""]
 
-    while True:
-	#can_bus.recv()
-	current_time = datetime.datetime.now()
-	if (current_time - start_time).total_seconds() >= 10:
-	    break    
-             #can_bus.recv()
-		
-    if mylistener.messages is None:
-	print("empty")
-    else:
-	for msg in mylistener.messages:
-		print(msg)
-             #can_bus.recv()
+	protocols=['6',			  
+		'6',		  
+		'7',		  
+		#'6',		  
+		#'6',		  
+		#'7',		  
+		'6',		  
+		'6',		  
+		'6',		  
+		'6',		  
+		'7',		  
+		'7',		  
+		'6',		  
+		'6',		  
+		'6',		  
+		'6',		  
+		'7',		  
+		'7']
+
+	headers=['7DF',			  
+		'7e0',		  
+		'18DB33F1',		  
+		#'7DF',		  
+		#'7DF',		  
+		#'18DB33F1',		  
+		'7df',		  
+		'7e0',		  
+		'7df',		  
+		'7e0',		  
+		'18DB33F1',		  
+		'18DB33F1',		  
+		'7df',		  
+		'7e0',		  
+		'7df',		  
+		'7e0',		  
+		'18DB33F1',		  
+		'18DB33F1']
+
+	pids=['02',  
+		'02',  
+		'02',  
+		#'A6',  
+		#'A6',  
+		#'A6',  
+		'F190',
+		'F190',
+		'F190',
+		'F190',
+		'F190',
+		'F190',
+		'F190',
+		'F190',
+		'F190',
+		'F190',
+		'F190',
+		'F190']
+
+	modes=['09',
+		'09',
+		'09',
+		#'01',
+		#'01',
+		#'01',
+		'22', 
+		'22', 
+		'22', 
+		'22', 
+		'22', 
+		'22', 
+		'22', 
+		'22', 
+		'22', 
+		'22', 
+		'22', 
+		'22'] 
+
+	VIN_CODE_LIST= ['vin_7DF_09_02',     
+		'vin_7e0_09_02',     
+		'vin_18DB33F1_09_02',
+		#'vin_7DF_A6',        
+		#'vin_7e0_A6',        
+		#'vin_18DB33F1_A6',   
+		'vin_7DF_UDS_3',     
+		'vin_7e0_UDS_3',     
+		'vin_7DF_UDS_4',     
+		'vin_7e0_UDS_4',     
+		'vin_18DB33F1_UDS_3',
+		'vin_18DB33F1_UDS_4',
+		'vin_7DF_UDS_2',     
+		'vin_7e0_UDS_2',     
+		'vin_7DF_UDS_5',     
+		'vin_7e0_UDS_2',     
+		'vin_18DB33F1_UDS_2',
+		'vin_18DB33F1_UDS_5']
+	
+	can_bus = can.interface.Bus('can0', bustype='socketcan')
+	#can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+	start_time = datetime.datetime.now()
+	print("test1")	
+	#message = can_bus.recv()
+	mylistener=CustomListener()
+	#notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
+	notifier = can.Notifier(can_bus, [mylistener,])
+
+	while True:
+		#can_bus.recv()
+		current_time = datetime.datetime.now()
+		if (current_time - start_time).total_seconds() >= 10:
+		    break    
+	if mylistener.messages is None:
+		print("empty")
+	else:
+		for msg in mylistener.messages:
+			print(msg)
+	     		#can_bus.recv()
 	     
     
 def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
@@ -259,7 +371,7 @@ def test_read_v2():
 
 
 def main():  
-    if True:
+
 	print("test1")
 	test_read_v3()
 	#test_read_v2()
@@ -269,5 +381,5 @@ def main():
 	#	test_read()
 	#    else:
 	#	test_read_v2()
-        
+
 main()
