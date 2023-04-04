@@ -231,10 +231,35 @@ def test_read_v2():
     #    current_time = datetime.datetime.now()
     #    if (current_time - start_time).total_seconds() >= 10:
     #        break
-    
+def test_read_v3(): 
+    filters = [{"can_id": 0x215, "can_mask": 0x7FF, "extended": False}, 
+			{"can_id": 0x073, "can_mask": 0x7FF, "extended": False}, 
+			{"can_id": 0x201, "can_mask": 0x7FF, "extended": False}]
+    can_bus = can.interface.Bus('can0', bustype='socketcan')
+    #can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+    start_time = datetime.datetime.now()
+    #message = can_bus.recv()
+    mylistener=CustomListener()
+    #notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
+    notifier = can.Notifier(can_bus, [mylistener,])
+
+    while True:
+	current_time = datetime.datetime.now()
+	if (current_time - start_time).total_seconds() >= 10:
+	    break    
+    #can_bus.recv()
+    if mylistener.messages is null:
+	print("empty")
+    else:
+	for msg in mylistener.messages:
+		print(msg)
+    #can_bus.recv()
+
+
 def main():  
     if True:
-	test_read_v2()
+	test_read_v3()
+	#test_read_v2()
 	#test_read_and_translate()
 	#else:
 	#    if True: 
