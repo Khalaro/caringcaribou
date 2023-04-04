@@ -150,7 +150,9 @@ def test_read_v3():
 		'vin_7e0_UDS_2',     
 		'vin_18DB33F1_UDS_2',
 		'vin_18DB33F1_UDS_5']
-	
+	filters = [{"can_id": 0x215, "can_mask": 0x7FF, "extended": False}, 
+		{"can_id": 0x073, "can_mask": 0x7FF, "extended": False}, 
+		{"can_id": 0x201, "can_mask": 0x7FF, "extended": False}]
 	#can_bus = can.interface.Bus('can0', bustype='socketcan')
 	#can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
    	#can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
