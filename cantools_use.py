@@ -162,9 +162,12 @@ def test_read_v2():
     #message = can_bus.recv()
     
     mylistener=CustomListener()
-    notifier = can.Notifier(can_bus, [mylistener,], timeout=10.0)
-    time.sleep(10.0)
+    notifier = can.Notifier(can_bus, [mylistener,], timeout=8.0)
 
+    while True:
+	current_time = datetime.datetime.now()
+	if (current_time - start_time).total_seconds() >= 10:
+	    break    
     #can_bus.recv()
     for msg in mylistener.messages:
 	print(msg)
