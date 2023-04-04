@@ -244,6 +244,7 @@ def test_read_v3():
     notifier = can.Notifier(can_bus, [mylistener,])
 
     while True:
+	can_bus.recv()
 	current_time = datetime.datetime.now()
 	if (current_time - start_time).total_seconds() >= 10:
 	    break    
