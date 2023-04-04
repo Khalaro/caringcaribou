@@ -53,7 +53,7 @@ def test_read_v3():
 	    break    
              #can_bus.recv()
 		
-    if mylistener.messages is null:
+    if mylistener.messages is None:
 	print("empty")
     else:
 	for msg in mylistener.messages:
