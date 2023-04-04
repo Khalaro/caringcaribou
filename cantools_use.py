@@ -151,8 +151,10 @@ def test_read_v3():
 		'vin_18DB33F1_UDS_2',
 		'vin_18DB33F1_UDS_5']
 	
-	can_bus = can.interface.Bus('can0', bustype='socketcan')
+	#can_bus = can.interface.Bus('can0', bustype='socketcan')
 	#can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+   	#can_bus = can.interface.Bus('can0', bustype='socketcan', can_filters=filters)
+   	can_bus = can.ThreadSafeBus('can0', bustype='socketcan', can_filters=filters)
 	start_time = datetime.datetime.now()
 	print("test1")	
 	#message = can_bus.recv()
