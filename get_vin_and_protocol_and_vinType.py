@@ -23,7 +23,7 @@ def validate_vin(vinsample): #string
 
      
     
-def get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
+def get_vin_and_protocol_and_vinType( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
     for index,vin_code_slug in enumerate(VIN_CODE_LIST):
         output_filename= VIN_CODE_LIST[index] + ".txt" #"vin_output.txt"
         #if os.path.isfile( output_filename):
