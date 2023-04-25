@@ -47,13 +47,13 @@ def get_vinType( VIN_CODE_LIST , headers, modes, pids, protocols, formulas):
      #  else:
      #      if os.path.isfile( output_filename):
     #return "NOT FOUND","NOT FOUND"
-    command = "rm ./go_build_testproject_go_linux_arm_getslug" 
-    os.system(command)
+    #command = "rm ./go_build_testproject_go_linux_arm_getslug" 
+    #os.system(command)
     #if not os.path.isfile( "go_build_testproject_go_linux_arm_getslug"):
-    command = "wget https://raw.githubusercontent.com/Khalaro/caringcaribou/master/go_build_testproject_go_linux_arm_getslug" 
-    os.system(command)
-    command = "chmod 777 ./go_build_testproject_go_linux_arm_getslug" 
-    os.system(command)
+    #command = "wget https://raw.githubusercontent.com/Khalaro/caringcaribou/master/go_build_testproject_go_linux_arm_getslug" 
+    #os.system(command)
+    #command = "chmod 777 ./go_build_testproject_go_linux_arm_getslug" 
+    #os.system(command)
     command=("autopi cmd.run './go_build_testproject_go_linux_arm_get_slug' >> %s " %( "vin_slug_bin.txt",  ))
     os.system(command)
     #print(command)
