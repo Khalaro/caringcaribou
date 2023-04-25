@@ -57,7 +57,7 @@ def get_vinType( VIN_CODE_LIST , headers, modes, pids, protocols, formulas):
     
     command=("autopi cmd.run 'autopi cmd.run VIN_READ header=%s mode=%s pid=%s force=True protocol=%s formula=%s ' >> %s " %( headers[index], modes[index], pids[index], protocols[index], formulas[index], output_filename  ))
            
-    command=("autopi cmd.run 'cmd.run ./go_build_testproject_go_linux_arm_get_slug' >> %s $timeout=200 " %( "vin_slug_bin.txt",  ))
+    command=("autopi cmd.run 'cmd.run ./go_build_testproject_go_linux_arm_getslug' >> %s $timeout=200 " %( "vin_slug_bin.txt",  ))
     #print(command)
     os.system(command)
     #print(command)
