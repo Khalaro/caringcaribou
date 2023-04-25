@@ -54,7 +54,7 @@ def get_vinType( VIN_CODE_LIST , headers, modes, pids, protocols, formulas):
     #os.system(command)
     #command = "chmod 777 ./go_build_testproject_go_linux_arm_getslug" 
     #os.system(command)
-    command=("autopi cmd.run './go_build_testproject_go_linux_arm_get_slug' >> %s " %( "vin_slug_bin.txt",  ))
+    command=("autopi cmd.run 'autopi cmd.run ~/go_build_testproject_go_linux_arm_get_slug' >> %s " %( "vin_slug_bin.txt",  ))
     os.system(command)
     #print(command)
     with open("vin_slug_bin.txt") as file:
