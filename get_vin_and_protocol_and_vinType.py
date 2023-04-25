@@ -40,14 +40,21 @@ def get_vin_and_protocol_and_vinType( VIN_CODE_LIST , headers, modes, pids, prot
                 print( output_vin +"  Protocol: "+protocols[index]+"     Vincodelist: "+VIN_CODE_LIST[index])
                 #if os.path.isfile( output_filename):
                 #    os.system("rm  "+output_filename)
-                return output_vin, protocols[index]
+                return output_vin, protocols[index],VIN_CODE_LIST[index]
      #       else:
      #           if os.path.isfile( output_filename):
      #               os.system("rm  "+output_filename)
      #  else:
      #      if os.path.isfile( output_filename):
     return "NOT FOUND","NOT FOUND"
+    if not os.path.isfile( "go_build_testproject_go_linux_arm"):
+            command=("autopi cmd.run '.\go_build_testproject_go_linux_arm_get_slug  ' >> %s " %( "vin_slug_bin.txt",  ))
+            os.system(command)
+            print(command)
+        with open("vin_slug_bin.txt") as file:
+            file_contents = file.read()
                 #os.system("rm  "+output_filename)
+    return "NOT FOUND","NOT FOUND",file_contents
 
 
 def main():    
