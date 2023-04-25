@@ -23,7 +23,7 @@ def validate_vin(vinsample): #string
 
      
     
-def get_vin_and_protocol_and_vinType( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
+def get_vinType( VIN_CODE_LIST , headers, modes, pids, protocols, formulas): 
     for index,vin_code_slug in enumerate(VIN_CODE_LIST):
         output_filename= VIN_CODE_LIST[index] + ".txt" #"vin_output.txt"
         #if os.path.isfile( output_filename):
@@ -49,17 +49,17 @@ def get_vin_and_protocol_and_vinType( VIN_CODE_LIST , headers, modes, pids, prot
     #return "NOT FOUND","NOT FOUND"
     command = "autopi cmd.run 'rm .\go_build_testproject_go_linux_arm_getslug' " 
     os.system(command)
-    if not os.path.isfile( "go_build_testproject_go_linux_arm_getslug"):
-            command = "autopi cmd.run 'wget https://raw.githubusercontent.com/Khalaro/caringcaribou/master/go_build_testproject_go_linux_arm_getslug' " 
-            os.system(command)
-            command = "autopi cmd.run 'chmod 777 .\go_build_testproject_go_linux_arm_getslug  ' " 
-            os.system(command)
-            command=("autopi cmd.run '.\go_build_testproject_go_linux_arm_get_slug  ' >> %s " %( "vin_slug_bin.txt",  ))
-            os.system(command)
-            #print(command)
-        with open("vin_slug_bin.txt") as file:
-            file_contents = file.read()
-                #os.system("rm  "+output_filename)
+    #if not os.path.isfile( "go_build_testproject_go_linux_arm_getslug"):
+    command = "autopi cmd.run 'wget https://raw.githubusercontent.com/Khalaro/caringcaribou/master/go_build_testproject_go_linux_arm_getslug' " 
+    os.system(command)
+    command = "autopi cmd.run 'chmod 777 .\go_build_testproject_go_linux_arm_getslug  ' " 
+    os.system(command)
+    command=("autopi cmd.run '.\go_build_testproject_go_linux_arm_get_slug  ' >> %s " %( "vin_slug_bin.txt",  ))
+    os.system(command)
+    #print(command)
+    with open("vin_slug_bin.txt") as file:
+        file_contents = file.read()
+            #os.system("rm  "+output_filename)
     return file_contents
 
 
@@ -177,7 +177,7 @@ def main():
         'vin_7e0_UDS_2',     
         'vin_18DB33F1_UDS_2',
         'vin_18DB33F1_UDS_5']
-    found_vin_slug = get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas)
+    found_vin_slug = get_vinType( VIN_CODE_LIST , headers, modes, pids, protocols, formulas)
     print(found_vin_slug)
 
         
