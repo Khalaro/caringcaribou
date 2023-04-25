@@ -31,16 +31,16 @@ def get_vinType( VIN_CODE_LIST , headers, modes, pids, protocols, formulas):
         if not os.path.isfile( output_filename):
             command=("autopi cmd.run 'autopi obd.query VIN_READ header=%s mode=%s pid=%s force=True protocol=%s formula=%s ' >> %s " %( headers[index], modes[index], pids[index], protocols[index], formulas[index], output_filename  ))
             os.system(command)
-            print(command)
+            #print(command)
         with open(output_filename) as file:
             file_contents = file.read()
         if (  (my_dict['VIN_VALUE'].search(file_contents)) is not None):
             output_vin = (my_dict['VIN_VALUE'].findall(file_contents))[0][0:]
             if validate_vin(output_vin):
-                print( output_vin +"  Protocol: "+protocols[index]+"     Vincodelist: "+VIN_CODE_LIST[index])
+                #print( output_vin +"  Protocol: "+protocols[index]+"     Vincodelist: "+VIN_CODE_LIST[index])
                 #if os.path.isfile( output_filename):
                 #    os.system("rm  "+output_filename)
-                return output_vin, protocols[index],VIN_CODE_LIST[index]
+                return VIN_CODE_LIST[index]
      #       else:
      #           if os.path.isfile( output_filename):
      #               os.system("rm  "+output_filename)
