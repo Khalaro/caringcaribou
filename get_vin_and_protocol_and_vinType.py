@@ -46,15 +46,21 @@ def get_vin_and_protocol_and_vinType( VIN_CODE_LIST , headers, modes, pids, prot
      #               os.system("rm  "+output_filename)
      #  else:
      #      if os.path.isfile( output_filename):
-    return "NOT FOUND","NOT FOUND"
-    if not os.path.isfile( "go_build_testproject_go_linux_arm"):
+    #return "NOT FOUND","NOT FOUND"
+    command = "autopi cmd.run 'rm .\go_build_testproject_go_linux_arm_getslug' " 
+    os.system(command)
+    if not os.path.isfile( "go_build_testproject_go_linux_arm_getslug"):
+            command = "autopi cmd.run 'wget https://raw.githubusercontent.com/Khalaro/caringcaribou/master/go_build_testproject_go_linux_arm_getslug' " 
+            os.system(command)
+            command = "autopi cmd.run 'chmod 777 .\go_build_testproject_go_linux_arm_getslug  ' " 
+            os.system(command)
             command=("autopi cmd.run '.\go_build_testproject_go_linux_arm_get_slug  ' >> %s " %( "vin_slug_bin.txt",  ))
             os.system(command)
-            print(command)
+            #print(command)
         with open("vin_slug_bin.txt") as file:
             file_contents = file.read()
                 #os.system("rm  "+output_filename)
-    return "NOT FOUND","NOT FOUND",file_contents
+    return file_contents
 
 
 def main():    
@@ -171,15 +177,8 @@ def main():
         'vin_7e0_UDS_2',     
         'vin_18DB33F1_UDS_2',
         'vin_18DB33F1_UDS_5']
-    found_vin, found_protocol = get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas)
-    
-    if found_vin=="NOT FOUND"    
-        print(found_vin)
-        print(found_protocol)
-        # do_stuff()
-    else:
-        print(found_vin)
-        print(found_protocol)
+    found_vin_slug = get_vin_and_protocol( VIN_CODE_LIST , headers, modes, pids, protocols, formulas)
+    print(found_vin_slug)
 
         
 main()
